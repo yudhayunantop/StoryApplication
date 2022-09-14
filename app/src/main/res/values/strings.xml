@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">StoryApplication</string>
+    <string name="title_login">Form Login</string>
+    <string name="title_regis">Form Register</string>
+    <string name="title">Know our story with \nDicoding Indonesia</string>
+    <string name="email">dummy@email.com</string>
+    <string name="name">dummy</string>
+    <string name="description">Description...</string>
+    <string name="upload">UPLOAD</string>
+    <string name="desc_img">image user</string>
+
+</resources>
