@@ -60,7 +60,7 @@
         app:layout_constraintLeft_toRightOf="@+id/ed_login_password"
         app:layout_constraintTop_toBottomOf="@+id/ed_login_email" />
 
-    <com.submission.storyapplication.assets.MyButton
+    <Button
         android:id="@+id/btn_login"
         android:layout_width="250dp"
         android:layout_height="wrap_content"

@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@id/textViewDicoding" />
 
     <EditText
-        android:id="@+id/ed_login_name"
+        android:id="@+id/ed_register_name"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -41,17 +41,17 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_regis" />
 
     <EditText
-        android:id="@+id/ed_login_email"
+        android:id="@+id/ed_register_email"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:hint="@string/email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_login_name" />
+        app:layout_constraintTop_toBottomOf="@+id/ed_register_name" />
 
     <EditText
-        android:id="@+id/ed_password"
+        android:id="@+id/ed_register_password"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -59,14 +59,14 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_login_email" />
-    <com.submission.storyapplication.assets.MyButton
-        android:id="@+id/btn_login"
+        app:layout_constraintTop_toBottomOf="@+id/ed_register_email" />
+    <Button
+        android:id="@+id/btn_register"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="@string/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_password" />
+        app:layout_constraintTop_toBottomOf="@+id/ed_register_password" />
 </androidx.constraintlayout.widget.ConstraintLayout>
