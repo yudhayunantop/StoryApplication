@@ -33,7 +33,7 @@ class MyButton : AppCompatButton {
         setTextColor(txtColor)
         textSize = 12f
         gravity = Gravity.CENTER
-        text = if(isEnabled) "LOGIN" else "Isi Password"
+        text = if(isEnabled) "SUBMIT" else "Isi Password"
     }
     private fun init() {
         txtColor = ContextCompat.getColor(context, android.R.color.background_light)

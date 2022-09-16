@@ -9,5 +9,6 @@
     <string name="description">Description...</string>
     <string name="upload">UPLOAD</string>
     <string name="desc_img">image user</string>
-    <string name="login">LOGIN</string>
+    <string name="login">SUBMIT</string>
+    <string name="txt_register">Does not have account?\nRegister!</string>
 </resources>
