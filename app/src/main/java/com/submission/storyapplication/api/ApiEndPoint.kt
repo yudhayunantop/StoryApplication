@@ -35,8 +35,8 @@ interface ApiEndPoint {
     ) : Call<ResponseModel>
 
 //    MINUS AUTH TOKEN
-    @GET("keluhan/{id}")
+    @GET("stories")
     fun get_all_stories(
-        @Path("page") page: Int,
+    @Header("Authorization") token:String
     ) : Call<AllStoriesModel>
 }

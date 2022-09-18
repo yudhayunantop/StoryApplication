@@ -12,6 +12,7 @@ import com.submission.storyapplication.R
 import com.submission.storyapplication.api.ApiRetrofit
 import com.submission.storyapplication.models.LoginModel
 import com.submission.storyapplication.preferences.Preferences
+import com.submission.storyapplication.preferences.Preferences.preferences
 import com.submission.storyapplication.preferences.Preferences.saveName
 import com.submission.storyapplication.preferences.Preferences.saveToken
 import com.submission.storyapplication.preferences.Preferences.saveUserId
@@ -27,12 +28,19 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Preferences.init(this)
+
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         supportActionBar?.hide()
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_login)
 
-        Preferences.init(this)
+
+        if(preferences.contains("KEY_userId")&&
+            preferences.contains("KEY_name")&&
+            preferences.contains("key_token")){
+            startActivity(Intent(this, MainActivity::class.java))
+        }
 
         setupView()
     }
@@ -73,9 +81,9 @@ class LoginActivity : AppCompatActivity() {
                                 saveUserId(submit.loginResult!!.userId!!)
                                 saveName(submit.loginResult.name!!)
                                 saveToken(submit.loginResult.token!!)
-//                                startActivity(
-//                                    Intent(this@LoginActivity, MainActivity::class.java)
-//                                )
+                                startActivity(
+                                    Intent(this@LoginActivity, MainActivity::class.java)
+                                )
                                 Toast.makeText(applicationContext, submit.message, Toast.LENGTH_SHORT).show()
                                 finish()
                             }
