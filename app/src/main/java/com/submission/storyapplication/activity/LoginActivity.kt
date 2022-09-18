@@ -7,9 +7,14 @@ import android.util.Log
 import android.view.Window
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import com.submission.storyapplication.R
 import com.submission.storyapplication.api.ApiRetrofit
 import com.submission.storyapplication.models.LoginModel
+import com.submission.storyapplication.preferences.Preferences
+import com.submission.storyapplication.preferences.Preferences.saveName
+import com.submission.storyapplication.preferences.Preferences.saveToken
+import com.submission.storyapplication.preferences.Preferences.saveUserId
 import kotlinx.android.synthetic.main.activity_login.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,7 +29,10 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         supportActionBar?.hide()
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         setContentView(R.layout.activity_login)
+
+        Preferences.init(this)
 
         setupView()
     }
@@ -61,23 +69,15 @@ class LoginActivity : AppCompatActivity() {
                         if (response.isSuccessful){
                             val submit = response.body()
                             if (submit!!.error==false){
-                                Toast.makeText(applicationContext, submit.message, Toast.LENGTH_SHORT).show()
-//                                Toast.makeText(
-//                                    applicationContext,
-//                                    submit.message,
-//                                    Toast.LENGTH_SHORT
-//                                ).show()
-//                                saveNamaPerusahaan(submit.data[0].nama_perusahaan!!)
-//                                saveNamaPT(submit.data[0].nama_pt!!)
-//                                saveUsernameCust(submit.data[0].username!!)
-//                                saveKeterangan(submit.data[0].keterangan!!)
-//                                saveKereta(submit.data[0].kereta!!)
-//                                saveMinContractVol(submit.data[0].min_contract_vol!!)
+
+                                saveUserId(submit.loginResult!!.userId!!)
+                                saveName(submit.loginResult.name!!)
+                                saveToken(submit.loginResult.token!!)
 //                                startActivity(
-//                                    Intent(this@LoginActivity, HomeActivity::class.java)
-////                                    .putExtra("datauser", submit!!.data[0]))
+//                                    Intent(this@LoginActivity, MainActivity::class.java)
 //                                )
-//                                finish()
+                                Toast.makeText(applicationContext, submit.message, Toast.LENGTH_SHORT).show()
+                                finish()
                             }
                             else{
                                 Toast.makeText(applicationContext, submit.message, Toast.LENGTH_SHORT).show()
