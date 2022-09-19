@@ -30,8 +30,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         Preferences.init(this)
 
+        getSupportActionBar()!!.setTitle("List Story");
+
         adapter = StoriesAdapter()
         adapter.notifyDataSetChanged()
+
         list_story.layoutManager = LinearLayoutManager(this)
         list_story.adapter = adapter
 
@@ -39,11 +42,10 @@ class MainActivity : AppCompatActivity() {
         
         adapter.setOnItemClickCallback(object : StoriesAdapter.OnItemClickCallback{
             override fun onItemClicked(data: AllStoriesModel.stories) {
-                Toast.makeText(applicationContext, "dor", Toast.LENGTH_SHORT).show()
-//                val moveIntent = Intent(this@MainActivity, DetailActivity::class.java)
-//                moveIntent.putExtra(DetailActivity.EXTRA_USER, data)
-//                moveIntent.putExtra(DetailActivity.EXTRA_AVATAR, data)
-//                startActivity(moveIntent)
+//                Toast.makeText(applicationContext, "dor", Toast.LENGTH_SHORT).show()
+                intent = Intent(this@MainActivity, DetailActivity::class.java)
+                intent.putExtra("data", data)
+                startActivity(intent)
             }
         })
 
@@ -59,10 +61,13 @@ class MainActivity : AppCompatActivity() {
                         if (response.isSuccessful){
                             val submit = response.body()
                             adapter.setData(submit!!.listStory!!)
+                        }else{
+                            Toast.makeText(applicationContext, "Failed fetch data!!!", Toast.LENGTH_SHORT).show()
                         }
                     }
 
                     override fun onFailure(call: Call<AllStoriesModel>, t: Throwable) {
+                        t.message
                         Toast.makeText(applicationContext, "No Connection!!!", Toast.LENGTH_SHORT).show()
                     }
 
