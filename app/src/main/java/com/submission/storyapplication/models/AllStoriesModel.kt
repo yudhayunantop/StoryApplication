@@ -3,7 +3,7 @@ package com.submission.storyapplication.models
 data class AllStoriesModel(
     val error: Boolean?,
     val message: String?,
-    val loginResult: List<stories>?
+    val listStory: List<stories>?
 ){
     data class stories(
         val id: String?,
