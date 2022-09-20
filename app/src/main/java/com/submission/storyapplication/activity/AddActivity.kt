@@ -159,9 +159,10 @@ class AddActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val responseBody = response.body()
                         if (responseBody != null && !responseBody.error!!) {
-                            Toast.makeText(this@AddActivity, responseBody.message, Toast.LENGTH_SHORT).show()
                             intent = Intent(this@AddActivity, MainActivity::class.java)
                             startActivity(intent)
+                            Toast.makeText(this@AddActivity, responseBody.message, Toast.LENGTH_SHORT).show()
+                            finish()
                         }
                     } else {
                         Toast.makeText(this@AddActivity, response.message(), Toast.LENGTH_SHORT).show()

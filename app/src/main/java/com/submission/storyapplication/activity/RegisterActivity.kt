@@ -62,8 +62,9 @@ class RegisterActivity : AppCompatActivity() {
                         val submit = response.body()
                         if (response.isSuccessful){
                             if (submit!!.error==false){
-                                Toast.makeText(applicationContext, submit.message, Toast.LENGTH_SHORT).show()
                                 startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+                                Toast.makeText(applicationContext, submit.message, Toast.LENGTH_SHORT).show()
+                                finish()
                             }
                             else{
                                 Toast.makeText(applicationContext, submit.message, Toast.LENGTH_SHORT).show()
