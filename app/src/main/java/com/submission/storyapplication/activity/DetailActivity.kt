@@ -15,6 +15,8 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
+        getSupportActionBar()!!.setTitle("Detail Story");
+
 //        tinggal masukkan data ke activity
         val data: AllStoriesModel.stories = intent.getSerializableExtra("data") as AllStoriesModel.stories
         Glide.with(this)
@@ -23,6 +25,6 @@ class DetailActivity : AppCompatActivity() {
             .into(iv_detail_photo)
         tv_detail_name.text = data.name
         tv_detail_description.text = data.description
-        Toast.makeText(applicationContext, "Detail data!!!", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(applicationContext, "Detail data!!!", Toast.LENGTH_SHORT).show()
     }
 }

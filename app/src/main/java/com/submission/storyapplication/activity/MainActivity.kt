@@ -49,6 +49,10 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        fab_create.setOnClickListener {
+            intent = Intent(this@MainActivity, AddActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun getAllStories(){

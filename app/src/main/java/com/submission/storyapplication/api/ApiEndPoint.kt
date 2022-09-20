@@ -28,10 +28,9 @@ interface ApiEndPoint {
     @Multipart
     @POST("stories")
     fun add_story(
+        @Header("Authorization") token:String,
         @Part("description") description: RequestBody,
-        @Part photo: MultipartBody.Part,
-        @Part("lat") lat: RequestBody,
-        @Part("lon") lon: RequestBody
+        @Part photo: MultipartBody.Part
     ) : Call<ResponseModel>
 
 //    MINUS AUTH TOKEN
