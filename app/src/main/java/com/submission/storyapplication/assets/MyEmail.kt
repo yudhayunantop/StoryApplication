@@ -11,7 +11,7 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import com.submission.storyapplication.R
 
-class MyPassword : AppCompatEditText, View.OnTouchListener {
+class MyEmail : AppCompatEditText, View.OnTouchListener {
 
     private lateinit var buttonIconError: Drawable
 
@@ -32,14 +32,14 @@ class MyPassword : AppCompatEditText, View.OnTouchListener {
                 // Do nothing.
             }
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                    if (s.toString().length<=5){
-                        buttonIconError = ContextCompat.getDrawable(context, R.drawable.ic_baseline_error_24) as Drawable
-                    }
-                    else{
-                        buttonIconError = ContextCompat.getDrawable(context, R.drawable.ic_baseline_check_24) as Drawable
-                    }
-                    setButtonDrawables(endOfTheText = buttonIconError)
+                if (!s.toString().contains('@') || !s.toString().contains('.')){
+                    buttonIconError = ContextCompat.getDrawable(context, R.drawable.ic_baseline_error_24) as Drawable
                 }
+                else{
+                    buttonIconError = ContextCompat.getDrawable(context, R.drawable.ic_baseline_check_24) as Drawable
+                }
+                setButtonDrawables(endOfTheText = buttonIconError)
+            }
             override fun afterTextChanged(s: Editable) {
                 // Do nothing.
             }
@@ -48,8 +48,8 @@ class MyPassword : AppCompatEditText, View.OnTouchListener {
     }
     private fun setButtonDrawables(
         startOfTheText: Drawable? = null,
-        topOfTheText:Drawable? = null,
-        endOfTheText:Drawable? = null,
+        topOfTheText: Drawable? = null,
+        endOfTheText: Drawable? = null,
         bottomOfTheText: Drawable? = null
     ){
         setCompoundDrawablesWithIntrinsicBounds(
@@ -62,5 +62,4 @@ class MyPassword : AppCompatEditText, View.OnTouchListener {
     override fun onTouch(v: View?, event: MotionEvent): Boolean {
         return false
     }
-
 }
