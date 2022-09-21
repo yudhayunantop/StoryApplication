@@ -6,19 +6,20 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import com.submission.storyapplication.R
 import com.submission.storyapplication.api.ApiRetrofit
 import com.submission.storyapplication.databinding.ActivityAddBinding
 import com.submission.storyapplication.helper.createCustomTempFile
+import com.submission.storyapplication.helper.rotateBitmap
 import com.submission.storyapplication.helper.uriToFile
 import com.submission.storyapplication.models.ResponseModel
 import com.submission.storyapplication.preferences.Preferences
@@ -39,6 +40,7 @@ class AddActivity : AppCompatActivity() {
     private var getFile: File? = null
     private lateinit var binding: ActivityAddBinding
     private val api by lazy { ApiRetrofit().endpoint}
+    private var counter: Int = 0
 
     companion object {
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
@@ -85,6 +87,7 @@ class AddActivity : AppCompatActivity() {
     }
 
     private fun startTakePhoto() {
+        counter = 1
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         intent.resolveActivity(packageManager)
 
@@ -101,11 +104,13 @@ class AddActivity : AppCompatActivity() {
     }
 
     private fun startGallery() {
+        counter =2
         val intent = Intent()
         intent.action = Intent.ACTION_GET_CONTENT
         intent.type = "image/*"
         val chooser = Intent.createChooser(intent, "Choose a Picture")
         launcherIntentGallery.launch(chooser)
+
     }
 
     private lateinit var currentPhotoPath: String
@@ -140,7 +145,7 @@ class AddActivity : AppCompatActivity() {
 
     private fun uploadImage() {
         if (getFile != null) {
-            val file = reduceFileImage(getFile as File)
+            val file = reduceFileImage(getFile as File, counter)
 
             val description = ed_add_description.text.toString().toRequestBody("text/plain".toMediaType())
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
@@ -177,8 +182,9 @@ class AddActivity : AppCompatActivity() {
         }
     }
 
-    fun reduceFileImage(file: File): File {
-        val bitmap = BitmapFactory.decodeFile(file.path)
+    fun reduceFileImage(file: File, code: Int): File {
+        var bitmap = BitmapFactory.decodeFile(file.path)
+        if (code==1) bitmap = rotateBitmap(bitmap, true)
         var compressQuality = 100
         var streamLength: Int
         do {
@@ -189,6 +195,7 @@ class AddActivity : AppCompatActivity() {
             compressQuality -= 5
         } while (streamLength > 1000000)
         bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
+
         return file
     }
 }
