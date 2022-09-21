@@ -1,12 +1,12 @@
 package com.submission.storyapplication.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Window
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.submission.storyapplication.R
 import com.submission.storyapplication.api.ApiRetrofit
 import com.submission.storyapplication.models.ResponseModel
@@ -37,11 +37,6 @@ class RegisterActivity : AppCompatActivity() {
 
         btn_register.setOnClickListener {
             registerAccount(email.text.toString(), name.text.toString(), password.text.toString())
-/*            if(btn_login.text.toString().equals("Show")){
-                ed_login_password.transformationMethod = HideReturnsTransformationMethod.getInstance()
-            } else{
-                ed_login_password.transformationMethod = PasswordTransformationMethod.getInstance()
-            }*/
         }
     }
 

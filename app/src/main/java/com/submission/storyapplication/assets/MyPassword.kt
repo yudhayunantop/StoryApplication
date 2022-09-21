@@ -4,15 +4,12 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
-import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import com.submission.storyapplication.R
-import kotlinx.android.synthetic.main.activity_login.view.*
 
 class MyPassword : AppCompatEditText, View.OnTouchListener {
 

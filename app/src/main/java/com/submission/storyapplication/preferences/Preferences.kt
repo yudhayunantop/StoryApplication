@@ -21,8 +21,6 @@ object Preferences {
         editor.apply()
     }
 
-    fun getUserId(): String? = preferences.getString(KEY_userId, null)
-    fun getName(): String? = preferences.getString(KEY_name, null)
     fun getToken(): String? = preferences.getString(KEY_token, null)
 
     fun saveUserId(userId: String){
