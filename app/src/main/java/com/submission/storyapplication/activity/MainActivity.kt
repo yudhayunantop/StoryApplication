@@ -1,11 +1,13 @@
 package com.submission.storyapplication.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.submission.storyapplication.R
 import com.submission.storyapplication.adapter.StoriesAdapter
@@ -15,6 +17,7 @@ import com.submission.storyapplication.preferences.Preferences
 import com.submission.storyapplication.preferences.Preferences.clearData
 import com.submission.storyapplication.preferences.Preferences.getToken
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.item_story.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,14 +42,21 @@ class MainActivity : AppCompatActivity() {
 
         getAllStories()
         
-        adapter.setOnItemClickCallback(object : StoriesAdapter.OnItemClickCallback{
-            override fun onItemClicked(data: AllStoriesModel.stories) {
-//                Toast.makeText(applicationContext, "dor", Toast.LENGTH_SHORT).show()
-                intent = Intent(this@MainActivity, DetailActivity::class.java)
-                intent.putExtra("data", data)
-                startActivity(intent)
-            }
-        })
+//        adapter.setOnItemClickCallback(object : StoriesAdapter.OnItemClickCallback{
+//            override fun onItemClicked(data: AllStoriesModel.stories) {
+//                intent = Intent(this@MainActivity, DetailActivity::class.java)
+//                intent.putExtra("data", data)
+//
+//                val optionsCompat: ActivityOptionsCompat =
+//                    ActivityOptionsCompat.makeSceneTransitionAnimation(
+//                        itemView.context as Activity,
+//                        Pair(iv_item_photo, "profile"),
+//                        Pair(tv_item_name, "name")
+//                    )
+//
+//                startActivity(intent)
+//            }
+//        })
 
         fab_create.setOnClickListener {
             intent = Intent(this@MainActivity, AddActivity::class.java)

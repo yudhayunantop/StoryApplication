@@ -23,6 +23,5 @@ class DetailActivity : AppCompatActivity() {
             .into(iv_detail_photo)
         tv_detail_name.text = data.name
         tv_detail_description.text = data.description
-//        Toast.makeText(applicationContext, "Detail data!!!", Toast.LENGTH_SHORT).show()
     }
 }
