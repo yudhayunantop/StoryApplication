@@ -3,20 +3,31 @@ package com.submission.storyapplication.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Window
+import android.widget.Toast
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.submission.storyapplication.R
+import com.submission.storyapplication.api.ApiRetrofit
 import com.submission.storyapplication.databinding.ActivityMapsBinding
+import com.submission.storyapplication.models.AllStoriesModel
+import com.submission.storyapplication.models.dataLocation
+import com.submission.storyapplication.preferences.Preferences
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
+    private val api by lazy { ApiRetrofit().endpoint}
+//    var dataLocations = List <AllStoriesModel.stories>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +66,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 //        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
 
+        getAllStoriesLocation()
         val dicodingSpace = LatLng(-6.8957643, 107.6338462)
         mMap.addMarker(
             MarkerOptions()
@@ -62,5 +74,28 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 .title("Dicoding Space")
                 .snippet("Batik Kumeli No.50")
         )
+    }
+
+    private fun getAllStoriesLocation(){
+        api.get_all_stories(token="Bearer ${Preferences.getToken()}")
+            .enqueue(object : Callback<AllStoriesModel> {
+                override fun onResponse(
+                    call: Call<AllStoriesModel>,
+                    response: Response<AllStoriesModel>
+                ) {
+                    if (response.isSuccessful){
+                        val submit = response.body()
+//                        dataLocations= submit!!.listStory!!
+                    }else{
+                        Toast.makeText(applicationContext, "Failed fetch data!!!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<AllStoriesModel>, t: Throwable) {
+                    t.message
+                    Toast.makeText(applicationContext, "No Connection!!!", Toast.LENGTH_SHORT).show()
+                }
+
+            })
     }
 }

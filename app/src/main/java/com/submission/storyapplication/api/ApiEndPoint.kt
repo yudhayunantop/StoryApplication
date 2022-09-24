@@ -24,7 +24,6 @@ interface ApiEndPoint {
         @Field("password") password: String,
     ) : Call<LoginModel>
 
-//    MINUS AUTH TOKEN
     @Multipart
     @POST("stories")
     fun add_story(
@@ -33,9 +32,13 @@ interface ApiEndPoint {
         @Part photo: MultipartBody.Part
     ) : Call<ResponseModel>
 
-//    MINUS AUTH TOKEN
     @GET("stories")
     fun get_all_stories(
     @Header("Authorization") token:String
+    ) : Call<AllStoriesModel>
+
+    @GET("stories?location=1")
+    fun get_all_stories_location(
+        @Header("Authorization") token:String
     ) : Call<AllStoriesModel>
 }
