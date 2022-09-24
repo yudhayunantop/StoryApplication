@@ -41,22 +41,6 @@ class MainActivity : AppCompatActivity() {
         list_story.adapter = adapter
 
         getAllStories()
-        
-//        adapter.setOnItemClickCallback(object : StoriesAdapter.OnItemClickCallback{
-//            override fun onItemClicked(data: AllStoriesModel.stories) {
-//                intent = Intent(this@MainActivity, DetailActivity::class.java)
-//                intent.putExtra("data", data)
-//
-//                val optionsCompat: ActivityOptionsCompat =
-//                    ActivityOptionsCompat.makeSceneTransitionAnimation(
-//                        itemView.context as Activity,
-//                        Pair(iv_item_photo, "profile"),
-//                        Pair(tv_item_name, "name")
-//                    )
-//
-//                startActivity(intent)
-//            }
-//        })
 
         fab_create.setOnClickListener {
             intent = Intent(this@MainActivity, AddActivity::class.java)
@@ -94,6 +78,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.maps ->{
+                val i = Intent(this, MapsActivity::class.java)
+                startActivity(i)
+                return true
+            }
             R.id.logout -> {
                 val i = Intent(this, LoginActivity::class.java)
                 clearData()
