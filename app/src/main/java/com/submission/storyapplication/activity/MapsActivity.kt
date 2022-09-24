@@ -6,6 +6,7 @@ import android.view.Window
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -27,7 +28,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
     private val api by lazy { ApiRetrofit().endpoint}
-//    var dataLocations = List <AllStoriesModel.stories>()
+    private var itemMutableList: MutableLiveData<List<AllStoriesModel.stories>> = MutableLiveData()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +43,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        getAllStoriesLocation()
     }
 
     /**
@@ -61,23 +64,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.uiSettings.isCompassEnabled = true
         mMap.uiSettings.isMapToolbarEnabled = true
 
-        // Add a marker in Sydney and move the camera
-//        val sydney = LatLng(-34.0, 151.0)
-//        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-
-        getAllStoriesLocation()
-        val dicodingSpace = LatLng(-6.8957643, 107.6338462)
-        mMap.addMarker(
-            MarkerOptions()
-                .position(dicodingSpace)
-                .title("Dicoding Space")
-                .snippet("Batik Kumeli No.50")
-        )
+       itemMutableList.observe(this, Observer {
+           it.forEach {
+               var location = LatLng(it.lat!!.toDouble(), it.lon!!.toDouble())
+               mMap.addMarker(
+                   MarkerOptions()
+                       .position(location)
+                       .title(it.name)
+                       .snippet(it.createdAt)
+               )
+           }
+       })
     }
 
     private fun getAllStoriesLocation(){
-        api.get_all_stories(token="Bearer ${Preferences.getToken()}")
+        api.get_all_stories_location(token="Bearer ${Preferences.getToken()}")
             .enqueue(object : Callback<AllStoriesModel> {
                 override fun onResponse(
                     call: Call<AllStoriesModel>,
@@ -85,7 +86,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 ) {
                     if (response.isSuccessful){
                         val submit = response.body()
-//                        dataLocations= submit!!.listStory!!
+                        itemMutableList.value=submit!!.listStory
                     }else{
                         Toast.makeText(applicationContext, "Failed fetch data!!!", Toast.LENGTH_SHORT).show()
                     }
