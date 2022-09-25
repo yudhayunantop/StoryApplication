@@ -8,10 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class ApiRetrofit {
-    companion object{
-        const val baseUrl = "https://story-api.dicoding.dev/v1/"
-    }
-
+    val baseUrl = "https://story-api.dicoding.dev/v1/"
     val endpoint : ApiEndPoint
 
         get() {

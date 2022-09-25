@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Window
 import android.widget.Toast
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 
@@ -17,7 +16,6 @@ import com.submission.storyapplication.R
 import com.submission.storyapplication.api.ApiRetrofit
 import com.submission.storyapplication.databinding.ActivityMapsBinding
 import com.submission.storyapplication.models.AllStoriesModel
-import com.submission.storyapplication.models.dataLocation
 import com.submission.storyapplication.preferences.Preferences
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,7 +26,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
     private val api by lazy { ApiRetrofit().endpoint}
-    private var itemMutableList: MutableLiveData<List<AllStoriesModel.stories>> = MutableLiveData()
+    private var itemMutableList: MutableLiveData<List<AllStoriesModel.stories>?> = MutableLiveData()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,14 +63,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.uiSettings.isMapToolbarEnabled = true
 
        itemMutableList.observe(this, Observer {
-           it.forEach {
-               var location = LatLng(it.lat!!.toDouble(), it.lon!!.toDouble())
-               mMap.addMarker(
-                   MarkerOptions()
-                       .position(location)
-                       .title(it.name)
-                       .snippet(it.createdAt)
-               )
+           if (it != null) {
+               it.forEach {
+                   var location = LatLng(it.lat!!.toDouble(), it.lon!!.toDouble())
+                   mMap.addMarker(
+                       MarkerOptions()
+                           .position(location)
+                           .title(it.name)
+                           .snippet(it.description)
+                   )
+               }
            }
        })
     }

@@ -33,9 +33,11 @@ interface ApiEndPoint {
     ) : Call<ResponseModel>
 
     @GET("stories")
-    fun get_all_stories(
-    @Header("Authorization") token:String
-    ) : Call<AllStoriesModel>
+    suspend fun get_all_stories(
+    @Header("Authorization") token:String,
+    @Query("page") page: Int,
+    @Query("size") size: Int
+    ) : List<AllStoriesModel.stories>
 
     @GET("stories?location=1")
     fun get_all_stories_location(

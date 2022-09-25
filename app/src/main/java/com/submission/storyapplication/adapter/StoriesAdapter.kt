@@ -14,12 +14,13 @@ import com.bumptech.glide.request.RequestOptions
 import com.submission.storyapplication.R
 import com.submission.storyapplication.activity.DetailActivity
 import com.submission.storyapplication.models.AllStoriesModel
-import kotlinx.android.synthetic.main.item_story.view.*
 import androidx.core.util.Pair
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 
-class StoriesAdapter(): RecyclerView.Adapter<StoriesAdapter.ListViewHolder>() {
+class StoriesAdapter
+    : PagingDataAdapter<AllStoriesModel.stories, StoriesAdapter.ListViewHolder>(DIFF_CALLBACK) {
     private val stories = ArrayList<AllStoriesModel.stories>()
-//    private var onItemClickCallback: OnItemClickCallback? = null
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, position: Int) : ListViewHolder{
         val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.item_story, viewGroup, false)
@@ -42,7 +43,6 @@ class StoriesAdapter(): RecyclerView.Adapter<StoriesAdapter.ListViewHolder>() {
                 tvName.text = stories.name
 
                 itemView.setOnClickListener {
-//                    onItemClickCallback?.onItemClicked(stories)
                     val intent = Intent(itemView.context, DetailActivity::class.java)
                     intent.putExtra("data", stories)
 
@@ -58,15 +58,15 @@ class StoriesAdapter(): RecyclerView.Adapter<StoriesAdapter.ListViewHolder>() {
             }
     }
 
-    public fun setData(data: List<AllStoriesModel.stories>) {
-        stories.clear()
-        stories.addAll(data)
-        notifyDataSetChanged()
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<AllStoriesModel.stories>() {
+            override fun areItemsTheSame(oldItem: AllStoriesModel.stories, newItem: AllStoriesModel.stories): Boolean {
+                return oldItem == newItem
+            }
+
+            override fun areContentsTheSame(oldItem: AllStoriesModel.stories, newItem: AllStoriesModel.stories): Boolean {
+                return oldItem.id == newItem.id
+            }
+        }
     }
-//    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
-//        this.onItemClickCallback = onItemClickCallback
-//    }
-//    interface OnItemClickCallback {
-//        fun onItemClicked(data: AllStoriesModel.stories)
-//    }
 }

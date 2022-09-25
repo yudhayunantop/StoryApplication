@@ -6,12 +6,16 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.submission.storyapplication.MainViewModel
 import com.submission.storyapplication.R
+import com.submission.storyapplication.ViewModelFactory
 import com.submission.storyapplication.adapter.StoriesAdapter
 import com.submission.storyapplication.api.ApiRetrofit
+import com.submission.storyapplication.databinding.ActivityMainBinding
 import com.submission.storyapplication.models.AllStoriesModel
 import com.submission.storyapplication.preferences.Preferences
 import com.submission.storyapplication.preferences.Preferences.clearData
@@ -24,21 +28,21 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
-    private val api by lazy { ApiRetrofit().endpoint}
+    private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: StoriesAdapter
+    private val mainViewModel: MainViewModel by viewModels {
+        ViewModelFactory(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        Preferences.init(this)
-
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         getSupportActionBar()!!.setTitle("List Story");
 
-        adapter = StoriesAdapter()
-        adapter.notifyDataSetChanged()
+        Preferences.init(this)
 
-        list_story.layoutManager = LinearLayoutManager(this)
-        list_story.adapter = adapter
+        binding.listStory.layoutManager = LinearLayoutManager(this)
 
         getAllStories()
 
@@ -49,27 +53,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getAllStories(){
-            api.get_all_stories(token="Bearer ${getToken()}")
-                .enqueue(object : Callback<AllStoriesModel> {
-                    override fun onResponse(
-                        call: Call<AllStoriesModel>,
-                        response: Response<AllStoriesModel>
-                    ) {
-                        if (response.isSuccessful){
-                            val submit = response.body()
-                            adapter.setData(submit!!.listStory!!)
-                        }else{
-                            Toast.makeText(applicationContext, "Failed fetch data!!!", Toast.LENGTH_SHORT).show()
-                        }
-                    }
+        adapter= StoriesAdapter()
+        mainViewModel.stories.observe(this, {
+            adapter.submitData(lifecycle, it)
+        })
+    }
 
-                    override fun onFailure(call: Call<AllStoriesModel>, t: Throwable) {
-                        t.message
-                        Toast.makeText(applicationContext, "No Connection!!!", Toast.LENGTH_SHORT).show()
-                    }
-
-                })
-        }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.options_menu, menu)

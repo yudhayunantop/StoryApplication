@@ -1,5 +1,7 @@
 package com.submission.storyapplication.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.io.Serializable
 
 data class AllStoriesModel(
@@ -8,8 +10,10 @@ data class AllStoriesModel(
     val listStory: List<stories>?
 ):Serializable
 {
+    @Entity(tableName = "stories")
     data class stories(
-        val id: String?,
+        @PrimaryKey
+        val id: String,
         val name: String?,
         val description: String?,
         val photoUrl: String?,
