@@ -20,16 +20,14 @@ import androidx.recyclerview.widget.DiffUtil
 
 class StoriesAdapter
     : PagingDataAdapter<AllStoriesModel.stories, StoriesAdapter.ListViewHolder>(DIFF_CALLBACK) {
-    private val stories = ArrayList<AllStoriesModel.stories>()
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, position: Int) : ListViewHolder{
         val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.item_story, viewGroup, false)
         return ListViewHolder(view)
     }
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.bind(stories[position])
+        getItem(position)?.let { holder.bind(it) }
     }
-    override fun getItemCount() = stories.size
 
     class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private var imgPhoto: ImageView = itemView.findViewById(R.id.iv_item_photo)

@@ -37,7 +37,7 @@ interface ApiEndPoint {
     @Header("Authorization") token:String,
     @Query("page") page: Int,
     @Query("size") size: Int
-    ) : List<AllStoriesModel.stories>
+    ) : AllStoriesModel
 
     @GET("stories?location=1")
     fun get_all_stories_location(

@@ -1,35 +1,24 @@
 package com.submission.storyapplication.activity
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.submission.storyapplication.MainViewModel
 import com.submission.storyapplication.R
 import com.submission.storyapplication.ViewModelFactory
 import com.submission.storyapplication.adapter.StoriesAdapter
-import com.submission.storyapplication.api.ApiRetrofit
 import com.submission.storyapplication.databinding.ActivityMainBinding
-import com.submission.storyapplication.models.AllStoriesModel
 import com.submission.storyapplication.preferences.Preferences
 import com.submission.storyapplication.preferences.Preferences.clearData
-import com.submission.storyapplication.preferences.Preferences.getToken
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.item_story.view.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var adapter: StoriesAdapter
     private val mainViewModel: MainViewModel by viewModels {
         ViewModelFactory(this)
     }
@@ -53,7 +42,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getAllStories(){
-        adapter= StoriesAdapter()
+        val adapter= StoriesAdapter()
+        binding.listStory.adapter=adapter
         mainViewModel.stories.observe(this, {
             adapter.submitData(lifecycle, it)
         })
