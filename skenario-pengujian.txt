@@ -1,7 +1,7 @@
-1. Ketika berhasil memuat data berita.
+1. Ketika berhasil memuat data stories.
 a. Memastikan mengembalikan Result.Success.
 b. Memastikan data tidak null.
 c. Memastikan jumlah data sesuai dengan yang diharapkan.
 
-2. Ketika gagal memuat data berita.
+2. Ketika gagal memuat data stories.
 a. Memastikan mengembalikan Result.Error.
