@@ -51,11 +51,6 @@ class LoginActivity : AppCompatActivity() {
 
         btn_login.setOnClickListener {
             checkLogin(email.text.toString(), password.text.toString())
-/*            if(btn_login.text.toString().equals("Show")){
-                ed_login_password.transformationMethod = HideReturnsTransformationMethod.getInstance()
-            } else{
-                ed_login_password.transformationMethod = PasswordTransformationMethod.getInstance()
-            }*/
         }
         txt_register.setOnClickListener {
             startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
