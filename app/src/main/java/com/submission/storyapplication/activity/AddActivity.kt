@@ -1,6 +1,7 @@
 package com.submission.storyapplication.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -142,6 +143,7 @@ class AddActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun uploadImage() {
         if (getFile != null) {
             val file = reduceFileImage(getFile as File, counter)

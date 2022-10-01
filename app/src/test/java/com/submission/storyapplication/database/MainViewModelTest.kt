@@ -1,37 +1,87 @@
 package com.submission.storyapplication.database
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.PagingData
+import androidx.paging.PagingSource
+import androidx.paging.PagingState
+import androidx.recyclerview.widget.ListUpdateCallback
+import com.submission.storyapplication.LiveDataTestUtils
+import com.submission.storyapplication.LiveDataTestUtils.Companion.getOrAwaitValue
+import com.submission.storyapplication.MainDispatcherRule
 import com.submission.storyapplication.MainViewModel
+import com.submission.storyapplication.adapter.StoriesAdapter
 import com.submission.storyapplication.models.AllStoriesModel
 import com.submission.storyapplication.paging.StoriesRepository
-import com.submission.storyapplication.utils.DataDummy
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert
-import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
+import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 
+@ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class MainViewModelTest{
-    @Mock
-    private lateinit var storiesRepository : StoriesRepository
-    private lateinit var mainViewModel: MainViewModel
-    private val dummyStories = DataDummy.generateDummyStoriesEntity()
+class MainViewModelTest {
+    @get:Rule
+    val instantExecutorRule = InstantTaskExecutorRule()
 
-    @Before
-    fun setUp() {
-        mainViewModel = MainViewModel(storiesRepository)
-    }
+    @get:Rule
+    val mainDispatcherRules = MainDispatcherRule()
+
+    @Mock
+    private lateinit var storiesRepository: StoriesRepository
 
     @Test
-    fun `when Get Stories Should Not Null and Return Success`() {
-        val expectedStories = LiveData<PagingData<AllStoriesModel.stories>>()
-        expectedStories.value = PagingData.(dummyStories)
-        `when`(storiesRepository.getStories()).thenReturn(expectedStories)
-        val actualNews = mainViewModel.stories
-        Assert.assertNotNull(actualNews)
+    fun `when Get Quote Should Not Null and Return Success`() = runTest {
+        val dummyQuote = LiveDataTestUtils.DataDummy.generateDummyStoriesResponse()
+        val data: PagingData<AllStoriesModel.stories> = StoryPagingSource.snapshot(dummyQuote)
+        val expectedQuote = MutableLiveData<PagingData<AllStoriesModel.stories>>()
+        expectedQuote.value = data
+        Mockito.`when`(storiesRepository.getStories()).thenReturn(expectedQuote)
+
+        val mainViewModel = MainViewModel(storiesRepository)
+        val actualQuote: PagingData<AllStoriesModel.stories> = mainViewModel.stories.getOrAwaitValue()
+
+        val differ = AsyncPagingDataDiffer(
+            diffCallback = StoriesAdapter.DIFF_CALLBACK,
+            updateCallback = noopListUpdateCallback,
+            workerDispatcher = Dispatchers.Main,
+        )
+        differ.submitData(actualQuote)
+
+        Assert.assertNotNull(differ.snapshot())
+        Assert.assertEquals(dummyQuote, differ.snapshot())
+        Assert.assertEquals(dummyQuote.size, differ.snapshot().size)
+        Assert.assertEquals(dummyQuote[0].id, differ.snapshot()[0]?.id)
     }
+}
+
+class StoryPagingSource : PagingSource<Int, LiveData<List<AllStoriesModel.stories>>>() {
+    companion object {
+        fun snapshot(items: List<AllStoriesModel.stories>): PagingData<AllStoriesModel.stories> {
+            return PagingData.from(items)
+        }
+    }
+
+    override fun getRefreshKey(state: PagingState<Int, LiveData<List<AllStoriesModel.stories>>>): Int {
+        return 0
+    }
+
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LiveData<List<AllStoriesModel.stories>>> {
+        return LoadResult.Page(emptyList(), 0, 1)
+    }
+}
+
+val noopListUpdateCallback = object : ListUpdateCallback {
+    override fun onInserted(position: Int, count: Int) {}
+    override fun onRemoved(position: Int, count: Int) {}
+    override fun onMoved(fromPosition: Int, toPosition: Int) {}
+    override fun onChanged(position: Int, count: Int, payload: Any?) {}
 }
