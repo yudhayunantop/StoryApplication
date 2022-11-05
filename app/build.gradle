@@ -1,6 +1,6 @@
 plugins {
     id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
     id 'kotlin-kapt'
@@ -35,6 +35,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+    namespace 'com.submission.storyapplication'
 }
 
 dependencies {
@@ -85,7 +86,13 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1" //main coroutine rule
     testImplementation 'org.mockito:mockito-core:3.12.4'
     testImplementation 'org.mockito:mockito-inline:3.12.4'
-//
-//    implementation "org.koin:koin-core:3.2.2"
-//    implementation "org.koin:koin-android:3.2.2"
+
+// Koin main features for Android
+    implementation "io.insert-koin:koin-android:$koin_android_version"
+// Java Compatibility
+    implementation "io.insert-koin:koin-android-compat:$koin_android_version"
+// Jetpack WorkManager
+    implementation "io.insert-koin:koin-androidx-workmanager:$koin_android_version"
+// Navigation Graph
+    implementation "io.insert-koin:koin-androidx-navigation:$koin_android_version"
 }

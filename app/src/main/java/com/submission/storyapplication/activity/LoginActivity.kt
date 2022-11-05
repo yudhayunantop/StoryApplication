@@ -8,23 +8,34 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.submission.storyapplication.R
 import com.submission.storyapplication.api.ApiRetrofit
+import com.submission.storyapplication.helper.Resources
 import com.submission.storyapplication.models.LoginModel
 import com.submission.storyapplication.preferences.Preferences
 import com.submission.storyapplication.preferences.Preferences.preferences
 import com.submission.storyapplication.preferences.Preferences.saveName
 import com.submission.storyapplication.preferences.Preferences.saveToken
 import com.submission.storyapplication.preferences.Preferences.saveUserId
+import com.submission.storyapplication.viewModel.LoginViewModel
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
-    private val api by lazy { ApiRetrofit().endpoint}
     private lateinit var email: EditText
     private lateinit var password: EditText
+    private val LoginViewModel: LoginViewModel by viewModel()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,9 +47,10 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
 
-        if(preferences.contains("KEY_userId")&&
-            preferences.contains("KEY_name")&&
-            preferences.contains("key_token")){
+        if (preferences.contains("KEY_userId") &&
+            preferences.contains("KEY_name") &&
+            preferences.contains("key_token")
+        ) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
@@ -46,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
         setupView()
     }
 
-    fun setupView(){
+    fun setupView() {
         email = findViewById(R.id.ed_login_email)
         password = findViewById(R.id.ed_login_password)
 
@@ -58,45 +70,42 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkLogin(username:String, password:String){
+    private fun checkLogin(username: String, password: String) {
         if (username.isNotEmpty() &&
-            password.isNotEmpty()){
+            password.isNotEmpty()
+        ) {
             Log.e("LoginActivity", username)
             Log.e("LoginActivity", password)
 
-            api.login(username, password)
-                .enqueue(object : Callback<LoginModel>{
-                    override fun onResponse(
-                        call: Call<LoginModel>,
-                        response: Response<LoginModel>
-                    ) {
-                        if (response.isSuccessful){
-                            val submit = response.body()
-                            if (submit!!.error==false){
+            val coroutineScope = LoginViewModel.viewModelScope
+            coroutineScope.launch {
+                LoginViewModel.login(username, password).flowOn(
+                    Dispatchers.IO
+                ).collect { result ->
+                    when (result) {
+                        is Resources.Success -> {
+                            saveUserId(result.data!!.userId!!)
+                            saveName(result.data.name!!)
+                            saveToken(result.data.token!!)
+                            startActivity(
+                                Intent(this@LoginActivity, MainActivity::class.java)
+                            )
+                            finish()
+                        }
+                        is Resources.Error -> {
+                            Toast.makeText(applicationContext, result.message, Toast.LENGTH_SHORT)
+                                .show()
+                            Log.e("LoginActivity", result.message.toString())
+                        }
+                        is Resources.Loading -> {
 
-                                saveUserId(submit.loginResult!!.userId!!)
-                                saveName(submit.loginResult.name!!)
-                                saveToken(submit.loginResult.token!!)
-                                startActivity(
-                                    Intent(this@LoginActivity, MainActivity::class.java)
-                                )
-                                Toast.makeText(applicationContext, submit.message, Toast.LENGTH_SHORT).show()
-                                finish()
-                            }
-                            else{
-                                Toast.makeText(applicationContext, submit.message, Toast.LENGTH_SHORT).show()
-                            }
                         }
                     }
-
-                    override fun onFailure(call: Call<LoginModel>, t: Throwable) {
-                        Toast.makeText(applicationContext, "No Connection!!!", Toast.LENGTH_SHORT).show()
-                    }
-
-                })
-        }
-        else{
-            Toast.makeText(applicationContext, "Username / password empty!!!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        } else {
+            Toast.makeText(applicationContext, "Username / password empty!!!", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 }
