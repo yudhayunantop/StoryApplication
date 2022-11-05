@@ -66,6 +66,7 @@ class MainActivity : AppCompatActivity() {
                 val i = Intent(this, LoginActivity::class.java)
                 clearData()
                 startActivity(i)
+                finish()
                 return true
             }
             else -> return true

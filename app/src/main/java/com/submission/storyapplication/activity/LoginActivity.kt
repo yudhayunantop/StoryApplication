@@ -40,6 +40,7 @@ class LoginActivity : AppCompatActivity() {
             preferences.contains("KEY_name")&&
             preferences.contains("key_token")){
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
 
         setupView()
