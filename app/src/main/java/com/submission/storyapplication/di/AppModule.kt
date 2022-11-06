@@ -4,8 +4,10 @@ import com.submission.storyapplication.api.ApiEndPoint
 import com.submission.storyapplication.helper.constant.baseUrl
 import com.submission.storyapplication.repository.LoginRepository
 import com.submission.storyapplication.repository.MapsRepository
+import com.submission.storyapplication.repository.RegisterRepository
 import com.submission.storyapplication.viewModel.LoginViewModel
 import com.submission.storyapplication.viewModel.MapsViewModel
+import com.submission.storyapplication.viewModel.RegisterViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -38,10 +40,12 @@ val networkModule= module{
 val repositoryModule= module{
     single{ LoginRepository(get())}
     single{MapsRepository(get())}
+    single{RegisterRepository(get())}
 
 }
 
 val viewModelModule = module {
     viewModel { LoginViewModel(get()) }
     viewModel{MapsViewModel(get())}
+    viewModel{RegisterViewModel(get())}
 }
