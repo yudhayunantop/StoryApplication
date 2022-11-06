@@ -1,6 +1,7 @@
 package com.submission.storyapplication.helper
 
 import android.app.Application
+import com.submission.storyapplication.di.databaseModul
 import com.submission.storyapplication.di.networkModule
 import com.submission.storyapplication.di.repositoryModule
 import com.submission.storyapplication.di.viewModelModule
@@ -15,7 +16,12 @@ class StoryApplication: Application() {
         startKoin {
             androidLogger(Level.NONE)
             androidContext(this@StoryApplication)
-            modules(listOf(networkModule, repositoryModule, viewModelModule))
+            modules(listOf(
+                networkModule,
+                repositoryModule,
+                viewModelModule,
+                databaseModul
+            ))
         }
     }
 }
