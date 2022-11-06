@@ -2,7 +2,7 @@ package com.submission.storyapplication.activity
 
 import android.content.Context
 import com.submission.storyapplication.api.ApiRetrofit
-import com.submission.storyapplication.paging.StoriesRepository
+import com.submission.storyapplication.repository.StoriesRepository
 import com.submission.storyapplication.paging.StoriesDatabase
 
 object Injection {

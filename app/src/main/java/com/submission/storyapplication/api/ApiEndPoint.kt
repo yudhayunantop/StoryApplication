@@ -40,7 +40,7 @@ interface ApiEndPoint {
     ) : AllStoriesModel
 
     @GET("stories?location=1")
-    fun get_all_stories_location(
+    suspend fun get_all_stories_location(
         @Header("Authorization") token:String
-    ) : Call<AllStoriesModel>
+    ) : AllStoriesModel
 }

@@ -9,7 +9,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.submission.storyapplication.activity.Injection
 import com.submission.storyapplication.models.AllStoriesModel
-import com.submission.storyapplication.paging.StoriesRepository
+import com.submission.storyapplication.repository.StoriesRepository
 
 class MainViewModel(storiesRepository: StoriesRepository) : ViewModel() {
     val stories: LiveData<PagingData<AllStoriesModel.stories>> =

@@ -1,31 +1,34 @@
 package com.submission.storyapplication.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Window
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-
+import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.submission.storyapplication.R
-import com.submission.storyapplication.api.ApiRetrofit
 import com.submission.storyapplication.databinding.ActivityMapsBinding
+import com.submission.storyapplication.helper.Resources
 import com.submission.storyapplication.models.AllStoriesModel
 import com.submission.storyapplication.preferences.Preferences
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.submission.storyapplication.viewModel.MapsViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
-    private val api by lazy { ApiRetrofit().endpoint}
+    private val MapsViewModel: MapsViewModel by viewModel()
     private var itemMutableList: MutableLiveData<List<AllStoriesModel.stories>?> = MutableLiveData()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,25 +81,26 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun getAllStoriesLocation(){
-        api.get_all_stories_location(token="Bearer ${Preferences.getToken()}")
-            .enqueue(object : Callback<AllStoriesModel> {
-                override fun onResponse(
-                    call: Call<AllStoriesModel>,
-                    response: Response<AllStoriesModel>
-                ) {
-                    if (response.isSuccessful){
-                        val submit = response.body()
-                        itemMutableList.value=submit!!.listStory
-                    }else{
-                        Toast.makeText(applicationContext, "Failed fetch data!!!", Toast.LENGTH_SHORT).show()
+        val coroutineScope = MapsViewModel.viewModelScope
+        coroutineScope.launch {
+            MapsViewModel.maps(token = "Bearer ${Preferences.getToken()}").flowOn(
+                Dispatchers.IO
+            ).collect { result ->
+                when (result) {
+                    is Resources.Success -> {
+                        itemMutableList.value= result.data!!
+                    }
+                    is Resources.Error -> {
+                        Toast.makeText(applicationContext, result.message, Toast.LENGTH_SHORT)
+                            .show()
+                        Log.e("LoginActivity", result.message.toString())
+                    }
+                    is Resources.Loading -> {
+                        Toast.makeText(applicationContext, "Loading...", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
-
-                override fun onFailure(call: Call<AllStoriesModel>, t: Throwable) {
-                    t.message
-                    Toast.makeText(applicationContext, "No Connection!!!", Toast.LENGTH_SHORT).show()
-                }
-
-            })
+            }
+        }
     }
 }
