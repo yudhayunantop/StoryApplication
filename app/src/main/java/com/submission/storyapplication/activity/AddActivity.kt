@@ -21,7 +21,7 @@ import com.submission.storyapplication.databinding.ActivityAddBinding
 import com.submission.storyapplication.helper.createCustomTempFile
 import com.submission.storyapplication.helper.rotateBitmap
 import com.submission.storyapplication.helper.uriToFile
-import com.submission.storyapplication.models.ResponseModel
+import com.submission.storyapplication.domain.models.ResponseModel
 import com.submission.storyapplication.preferences.Preferences
 import kotlinx.android.synthetic.main.activity_add.*
 import okhttp3.MediaType.Companion.toMediaType

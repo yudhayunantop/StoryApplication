@@ -6,7 +6,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
 import com.submission.storyapplication.api.ApiEndPoint
-import com.submission.storyapplication.models.AllStoriesModel
+import com.submission.storyapplication.domain.models.AllStoriesModel
 import com.submission.storyapplication.paging.StoriesDatabase
 import com.submission.storyapplication.paging.StoriesPagingSource
 

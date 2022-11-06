@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.submission.storyapplication.models.AllStoriesModel
+import com.submission.storyapplication.domain.models.AllStoriesModel
 
 @Database(
     entities = [AllStoriesModel.stories::class],

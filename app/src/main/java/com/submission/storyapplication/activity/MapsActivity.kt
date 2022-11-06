@@ -16,7 +16,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.submission.storyapplication.R
 import com.submission.storyapplication.databinding.ActivityMapsBinding
 import com.submission.storyapplication.helper.Resources
-import com.submission.storyapplication.models.AllStoriesModel
+import com.submission.storyapplication.domain.models.AllStoriesModel
 import com.submission.storyapplication.preferences.Preferences
 import com.submission.storyapplication.viewModel.MapsViewModel
 import kotlinx.coroutines.Dispatchers

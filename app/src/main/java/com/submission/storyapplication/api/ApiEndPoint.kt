@@ -1,8 +1,8 @@
 package com.submission.storyapplication.api
 
-import com.submission.storyapplication.models.AllStoriesModel
-import com.submission.storyapplication.models.LoginModel
-import com.submission.storyapplication.models.ResponseModel
+import com.submission.storyapplication.domain.models.AllStoriesModel
+import com.submission.storyapplication.domain.models.LoginModel
+import com.submission.storyapplication.domain.models.ResponseModel
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call

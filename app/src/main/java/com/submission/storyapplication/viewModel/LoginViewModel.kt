@@ -2,15 +2,15 @@ package com.submission.storyapplication.viewModel
 
 import androidx.lifecycle.ViewModel
 import com.submission.storyapplication.helper.Resources
-import com.submission.storyapplication.models.LoginModel
-import com.submission.storyapplication.repository.LoginRepository
+import com.submission.storyapplication.domain.models.LoginModel
+import com.submission.storyapplication.domain.useCase.LoginUseCase
 import kotlinx.coroutines.flow.flow
 
-class LoginViewModel (val repository: LoginRepository): ViewModel(){
+class LoginViewModel (val useCase: LoginUseCase): ViewModel(){
     fun login(email: String, password: String)= flow {
         emit(Resources.Loading(data = null))
         try {
-            val responseLogin = repository.login(email, password)
+            val responseLogin = useCase.login(email, password)
             if (responseLogin.error == false){
                 emit(Resources.Success(data=responseLogin.loginResult as LoginModel.login))
             }else if (responseLogin.error==true){

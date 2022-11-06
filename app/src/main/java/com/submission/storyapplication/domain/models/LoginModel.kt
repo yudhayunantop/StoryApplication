@@ -1,4 +1,4 @@
-package com.submission.storyapplication.models
+package com.submission.storyapplication.domain.models
 
 data class LoginModel(
     val error: Boolean?,

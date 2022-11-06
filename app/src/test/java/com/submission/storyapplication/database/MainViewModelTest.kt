@@ -13,7 +13,7 @@ import com.submission.storyapplication.LiveDataTestUtils.Companion.getOrAwaitVal
 import com.submission.storyapplication.MainDispatcherRule
 import com.submission.storyapplication.MainViewModel
 import com.submission.storyapplication.adapter.StoriesAdapter
-import com.submission.storyapplication.models.AllStoriesModel
+import com.submission.storyapplication.domain.models.AllStoriesModel
 import com.submission.storyapplication.repository.StoriesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

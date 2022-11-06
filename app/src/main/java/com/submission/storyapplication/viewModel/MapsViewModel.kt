@@ -2,8 +2,8 @@ package com.submission.storyapplication.viewModel
 
 import androidx.lifecycle.ViewModel
 import com.submission.storyapplication.helper.Resources
-import com.submission.storyapplication.models.AllStoriesModel
-import com.submission.storyapplication.models.LoginModel
+import com.submission.storyapplication.domain.models.AllStoriesModel
+import com.submission.storyapplication.domain.models.LoginModel
 import com.submission.storyapplication.repository.MapsRepository
 import kotlinx.coroutines.flow.flow
 

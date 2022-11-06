@@ -3,6 +3,12 @@ package com.submission.storyapplication.di
 import androidx.room.Room
 import com.submission.storyapplication.MainViewModel
 import com.submission.storyapplication.api.ApiEndPoint
+import com.submission.storyapplication.domain.repoInterface.ILoginRepository
+import com.submission.storyapplication.domain.interactor.LoginInteractor
+import com.submission.storyapplication.domain.interactor.RegisterInteractor
+import com.submission.storyapplication.domain.repoInterface.IRegisterRepository
+import com.submission.storyapplication.domain.useCase.LoginUseCase
+import com.submission.storyapplication.domain.useCase.RegisterUseCase
 import com.submission.storyapplication.helper.constant.baseUrl
 import com.submission.storyapplication.paging.StoriesDatabase
 import com.submission.storyapplication.repository.LoginRepository
@@ -25,7 +31,7 @@ val networkModule= module{
     single {
         OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-//                Tambah waktu agar tidak timeout
+//          Tambah waktu agar tidak timeout
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS )
@@ -43,8 +49,9 @@ val networkModule= module{
 }
 
 val repositoryModule= module{
-    single{ LoginRepository(get())}
+    single<ILoginRepository>{LoginRepository(get())}
     single{MapsRepository(get())}
+    single<IRegisterRepository>{RegisterRepository(get())}
     single{RegisterRepository(get())}
     single{StoriesRepository(get(),get())}
 }
@@ -65,4 +72,9 @@ val databaseModul = module{
             .fallbackToDestructiveMigration()
             .build()
     }
+}
+
+val interactorModul = module{
+    factory<LoginUseCase>{LoginInteractor(get())}
+    factory<RegisterUseCase>{ RegisterInteractor(get()) }
 }

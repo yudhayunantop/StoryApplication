@@ -14,7 +14,7 @@ import androidx.lifecycle.viewModelScope
 import com.submission.storyapplication.R
 import com.submission.storyapplication.api.ApiRetrofit
 import com.submission.storyapplication.helper.Resources
-import com.submission.storyapplication.models.ResponseModel
+import com.submission.storyapplication.domain.models.ResponseModel
 import com.submission.storyapplication.preferences.Preferences
 import com.submission.storyapplication.viewModel.RegisterViewModel
 import kotlinx.android.synthetic.main.activity_login.*

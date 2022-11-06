@@ -3,7 +3,7 @@ package com.submission.storyapplication.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.submission.storyapplication.api.ApiEndPoint
-import com.submission.storyapplication.models.AllStoriesModel
+import com.submission.storyapplication.domain.models.AllStoriesModel
 import com.submission.storyapplication.preferences.Preferences
 
 class StoriesPagingSource(private val apiEndPoint: ApiEndPoint) : PagingSource<Int, AllStoriesModel.stories>() {

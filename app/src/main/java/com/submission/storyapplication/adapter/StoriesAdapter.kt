@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.submission.storyapplication.R
 import com.submission.storyapplication.activity.DetailActivity
-import com.submission.storyapplication.models.AllStoriesModel
+import com.submission.storyapplication.domain.models.AllStoriesModel
 import androidx.core.util.Pair
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil

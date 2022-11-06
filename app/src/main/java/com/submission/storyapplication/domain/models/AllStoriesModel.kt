@@ -1,4 +1,4 @@
-package com.submission.storyapplication.models
+package com.submission.storyapplication.domain.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
