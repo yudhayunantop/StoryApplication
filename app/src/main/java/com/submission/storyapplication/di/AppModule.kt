@@ -1,6 +1,5 @@
 package com.submission.storyapplication.di
 
-import com.google.gson.GsonBuilder
 import com.submission.storyapplication.api.ApiEndPoint
 import com.submission.storyapplication.helper.constant.baseUrl
 import com.submission.storyapplication.repository.LoginRepository
