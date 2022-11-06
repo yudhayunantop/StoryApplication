@@ -4,14 +4,15 @@ import androidx.lifecycle.ViewModel
 import com.submission.storyapplication.helper.Resources
 import com.submission.storyapplication.domain.models.AllStoriesModel
 import com.submission.storyapplication.domain.models.LoginModel
+import com.submission.storyapplication.domain.useCase.MapsUseCase
 import com.submission.storyapplication.repository.MapsRepository
 import kotlinx.coroutines.flow.flow
 
-class MapsViewModel (val repository: MapsRepository): ViewModel(){
+class MapsViewModel (val useCase: MapsUseCase): ViewModel(){
     fun maps(token: String)= flow {
         emit(Resources.Loading(data = null))
         try {
-            val responseMaps = repository.getAllStoriesLocation(token)
+            val responseMaps = useCase.get_all_stories(token)
             if (responseMaps.error == false){
                 emit(Resources.Success(data=responseMaps.listStory))
             }else if (responseMaps.error==true){
