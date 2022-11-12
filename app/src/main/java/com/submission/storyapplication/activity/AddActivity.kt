@@ -1,7 +1,6 @@
 package com.submission.storyapplication.activity
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -18,7 +17,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.viewModelScope
-import com.submission.storyapplication.api.ApiRetrofit
 import com.submission.storyapplication.databinding.ActivityAddBinding
 import com.submission.storyapplication.helper.Resources
 import com.submission.storyapplication.helper.createCustomTempFile
@@ -120,7 +118,7 @@ class AddActivity : AppCompatActivity() {
     private val launcherIntentCamera = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
-        if (it.resultCode == AppCompatActivity.RESULT_OK) {
+        if (it.resultCode == RESULT_OK) {
             val myFile = File(currentPhotoPath)
             getFile = myFile
 
@@ -134,10 +132,10 @@ class AddActivity : AppCompatActivity() {
     private val launcherIntentGallery = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        if (result.resultCode == AppCompatActivity.RESULT_OK) {
+        if (result.resultCode == RESULT_OK) {
             val selectedImg: Uri = result.data?.data as Uri
 
-            val contentResolver: ContentResolver = contentResolver
+            contentResolver
             val myFile = uriToFile(selectedImg, this@AddActivity)
 
             getFile = myFile
