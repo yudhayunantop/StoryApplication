@@ -10,28 +10,32 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.lifecycle.viewModelScope
 import com.submission.storyapplication.api.ApiRetrofit
 import com.submission.storyapplication.databinding.ActivityAddBinding
+import com.submission.storyapplication.helper.Resources
 import com.submission.storyapplication.helper.createCustomTempFile
 import com.submission.storyapplication.helper.rotateBitmap
 import com.submission.storyapplication.helper.uriToFile
-import com.submission.storyapplication.domain.models.ResponseModel
 import com.submission.storyapplication.preferences.Preferences
+import com.submission.storyapplication.viewModel.AddStoriesViewModel
 import kotlinx.android.synthetic.main.activity_add.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -39,9 +43,8 @@ import java.io.FileOutputStream
 class AddActivity : AppCompatActivity() {
     private var getFile: File? = null
     private lateinit var binding: ActivityAddBinding
-    private val api by lazy { ApiRetrofit().endpoint}
     private var counter: Int = 0
-
+    private val AddStoriesViewModel: AddStoriesViewModel by viewModel()
     companion object {
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSIONS = 10
@@ -143,7 +146,6 @@ class AddActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("SuspiciousIndentation")
     private fun uploadImage() {
         if (getFile != null) {
             val file = reduceFileImage(getFile as File, counter)
@@ -156,28 +158,27 @@ class AddActivity : AppCompatActivity() {
                 requestImageFile
             )
 
-                api.add_story(token="Bearer ${Preferences.getToken()}",description, imageMultipart)
-                    .enqueue(object : Callback<ResponseModel> {
-                override fun onResponse(
-                    call: Call<ResponseModel>,
-                    response: Response<ResponseModel>
-                ) {
-                    if (response.isSuccessful) {
-                        val responseBody = response.body()
-                        if (responseBody != null && !responseBody.error!!) {
+            val coroutineScope = AddStoriesViewModel.viewModelScope
+            coroutineScope.launch {
+                AddStoriesViewModel.addStories(token = "Bearer ${Preferences.getToken()}", description, imageMultipart).flowOn(
+                    Dispatchers.IO
+                ).collect { result ->
+                    when (result) {
+                        is Resources.Success -> {
                             intent = Intent(this@AddActivity, MainActivity::class.java)
                             startActivity(intent)
-                            Toast.makeText(this@AddActivity, responseBody.message, Toast.LENGTH_SHORT).show()
                             finish()
                         }
-                    } else {
-                        Toast.makeText(this@AddActivity, response.message(), Toast.LENGTH_SHORT).show()
+                        is Resources.Error -> {
+                            Toast.makeText(applicationContext, result.message, Toast.LENGTH_SHORT)
+                                .show()
+                            Log.e("LoginActivity", result.message.toString())
+                        }
+                        is Resources.Loading -> {
+                        }
                     }
                 }
-                override fun onFailure(call: Call<ResponseModel>, t: Throwable) {
-                    Toast.makeText(this@AddActivity, "Gagal instance Retrofit", Toast.LENGTH_SHORT).show()
-                }
-            })
+            }
         } else {
             Toast.makeText(this@AddActivity, "Silakan masukkan berkas gambar terlebih dahulu.", Toast.LENGTH_SHORT).show()
         }

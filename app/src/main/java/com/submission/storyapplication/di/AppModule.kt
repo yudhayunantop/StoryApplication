@@ -3,24 +3,19 @@ package com.submission.storyapplication.di
 import androidx.room.Room
 import com.submission.storyapplication.MainViewModel
 import com.submission.storyapplication.api.ApiEndPoint
-import com.submission.storyapplication.domain.interactor.AllStoriesInteractor
+import com.submission.storyapplication.domain.interactor.*
 import com.submission.storyapplication.domain.repoInterface.ILoginRepository
-import com.submission.storyapplication.domain.interactor.LoginInteractor
-import com.submission.storyapplication.domain.interactor.MapsInteractor
-import com.submission.storyapplication.domain.interactor.RegisterInteractor
 import com.submission.storyapplication.domain.repoInterface.IAllStoriesRepository
 import com.submission.storyapplication.domain.repoInterface.IMapsRepository
 import com.submission.storyapplication.domain.repoInterface.IRegisterRepository
-import com.submission.storyapplication.domain.useCase.AllStoriesUseCase
-import com.submission.storyapplication.domain.useCase.LoginUseCase
-import com.submission.storyapplication.domain.useCase.MapsUseCase
-import com.submission.storyapplication.domain.useCase.RegisterUseCase
+import com.submission.storyapplication.domain.useCase.*
 import com.submission.storyapplication.helper.constant.baseUrl
 import com.submission.storyapplication.paging.StoriesDatabase
 import com.submission.storyapplication.repository.LoginRepository
 import com.submission.storyapplication.repository.MapsRepository
 import com.submission.storyapplication.repository.RegisterRepository
 import com.submission.storyapplication.repository.StoriesRepository
+import com.submission.storyapplication.viewModel.AddStoriesViewModel
 import com.submission.storyapplication.viewModel.LoginViewModel
 import com.submission.storyapplication.viewModel.MapsViewModel
 import com.submission.storyapplication.viewModel.RegisterViewModel
@@ -66,6 +61,7 @@ val viewModelModule = module {
     viewModel{MapsViewModel(get())}
     viewModel{RegisterViewModel(get())}
     viewModel{MainViewModel(get())}
+    viewModel{AddStoriesViewModel(get())}
 }
 
 val databaseModul = module{
@@ -84,4 +80,5 @@ val interactorModul = module{
     factory<RegisterUseCase>{ RegisterInteractor(get()) }
     factory<MapsUseCase>{ MapsInteractor(get()) }
     factory<AllStoriesUseCase>{ AllStoriesInteractor(get()) }
+    factory<AddStoriesUseCase>{ AddStoriesInteractor(get()) }
 }

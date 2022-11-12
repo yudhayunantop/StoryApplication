@@ -5,7 +5,6 @@ import com.submission.storyapplication.domain.models.LoginModel
 import com.submission.storyapplication.domain.models.ResponseModel
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.Call
 import retrofit2.http.*
 
 interface ApiEndPoint {
@@ -26,11 +25,11 @@ interface ApiEndPoint {
 
     @Multipart
     @POST("stories")
-    fun add_story(
+    suspend fun add_story(
         @Header("Authorization") token:String,
         @Part("description") description: RequestBody,
         @Part photo: MultipartBody.Part
-    ) : Call<ResponseModel>
+    ) : ResponseModel
 
     @GET("stories")
     suspend fun get_all_stories(
