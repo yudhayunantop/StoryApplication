@@ -3,12 +3,15 @@ package com.submission.storyapplication.di
 import androidx.room.Room
 import com.submission.storyapplication.MainViewModel
 import com.submission.storyapplication.api.ApiEndPoint
+import com.submission.storyapplication.domain.interactor.AllStoriesInteractor
 import com.submission.storyapplication.domain.repoInterface.ILoginRepository
 import com.submission.storyapplication.domain.interactor.LoginInteractor
 import com.submission.storyapplication.domain.interactor.MapsInteractor
 import com.submission.storyapplication.domain.interactor.RegisterInteractor
+import com.submission.storyapplication.domain.repoInterface.IAllStoriesRepository
 import com.submission.storyapplication.domain.repoInterface.IMapsRepository
 import com.submission.storyapplication.domain.repoInterface.IRegisterRepository
+import com.submission.storyapplication.domain.useCase.AllStoriesUseCase
 import com.submission.storyapplication.domain.useCase.LoginUseCase
 import com.submission.storyapplication.domain.useCase.MapsUseCase
 import com.submission.storyapplication.domain.useCase.RegisterUseCase
@@ -55,7 +58,7 @@ val repositoryModule= module{
     single<ILoginRepository>{LoginRepository(get())}
     single<IRegisterRepository>{RegisterRepository(get())}
     single<IMapsRepository>{MapsRepository(get())}
-    single{StoriesRepository(get(),get())}
+    single<IAllStoriesRepository>{StoriesRepository(get(),get())}
 }
 
 val viewModelModule = module {
@@ -80,4 +83,5 @@ val interactorModul = module{
     factory<LoginUseCase>{LoginInteractor(get())}
     factory<RegisterUseCase>{ RegisterInteractor(get()) }
     factory<MapsUseCase>{ MapsInteractor(get()) }
+    factory<AllStoriesUseCase>{ AllStoriesInteractor(get()) }
 }
