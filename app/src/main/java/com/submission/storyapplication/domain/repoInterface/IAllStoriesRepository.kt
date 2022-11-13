@@ -1,7 +1,7 @@
 package com.submission.storyapplication.domain.repoInterface
 
 import com.submission.storyapplication.domain.models.ResponseModel
-import com.submission.storyapplication.paging.StoriesPagingSource
+import com.submission.storyapplication.database.StoriesPagingSource
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 

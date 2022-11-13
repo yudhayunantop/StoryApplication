@@ -1,4 +1,4 @@
-package com.submission.storyapplication.paging
+package com.submission.storyapplication.database
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

@@ -4,21 +4,12 @@ import androidx.room.Room
 import com.submission.storyapplication.MainViewModel
 import com.submission.storyapplication.api.ApiEndPoint
 import com.submission.storyapplication.domain.interactor.*
-import com.submission.storyapplication.domain.repoInterface.ILoginRepository
-import com.submission.storyapplication.domain.repoInterface.IAllStoriesRepository
-import com.submission.storyapplication.domain.repoInterface.IMapsRepository
-import com.submission.storyapplication.domain.repoInterface.IRegisterRepository
 import com.submission.storyapplication.domain.useCase.*
 import com.submission.storyapplication.helper.constant.baseUrl
-import com.submission.storyapplication.paging.StoriesDatabase
-import com.submission.storyapplication.repository.LoginRepository
-import com.submission.storyapplication.repository.MapsRepository
-import com.submission.storyapplication.repository.RegisterRepository
-import com.submission.storyapplication.repository.StoriesRepository
-import com.submission.storyapplication.viewModel.AddStoriesViewModel
-import com.submission.storyapplication.viewModel.LoginViewModel
-import com.submission.storyapplication.viewModel.MapsViewModel
-import com.submission.storyapplication.viewModel.RegisterViewModel
+import com.submission.storyapplication.database.StoriesDatabase
+import com.submission.storyapplication.domain.repoInterface.*
+import com.submission.storyapplication.repository.*
+import com.submission.storyapplication.viewModel.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -54,6 +45,7 @@ val repositoryModule= module{
     single<IRegisterRepository>{RegisterRepository(get())}
     single<IMapsRepository>{MapsRepository(get())}
     single<IAllStoriesRepository>{StoriesRepository(get(),get())}
+    single<IFavoriteRerpository>{FavoriteRepository(get())}
 }
 
 val viewModelModule = module {
@@ -62,16 +54,20 @@ val viewModelModule = module {
     viewModel{RegisterViewModel(get())}
     viewModel{MainViewModel(get())}
     viewModel{AddStoriesViewModel(get())}
+    viewModel{DetailViewModel(get())}
 }
 
 val databaseModul = module{
     single{
         Room.databaseBuilder(
             androidContext(),
-            StoriesDatabase::class.java, "stories_database"
+            StoriesDatabase::class.java, "stories_database.db"
         )
             .fallbackToDestructiveMigration()
             .build()
+    }
+    factory{
+        get<StoriesDatabase>().storyDao()
     }
 }
 
@@ -81,4 +77,5 @@ val interactorModul = module{
     factory<MapsUseCase>{ MapsInteractor(get()) }
     factory<AllStoriesUseCase>{ AllStoriesInteractor(get()) }
     factory<AddStoriesUseCase>{ AddStoriesInteractor(get()) }
+    factory<FavoriteUseCase>{ FavoriteInteractor(get()) }
 }
