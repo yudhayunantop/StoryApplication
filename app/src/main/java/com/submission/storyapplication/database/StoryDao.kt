@@ -1,9 +1,6 @@
 package com.submission.storyapplication.database
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.submission.storyapplication.domain.models.AllStoriesModel
 import kotlinx.coroutines.flow.Flow
 
@@ -12,7 +9,7 @@ interface StoryDao {
     @Query("SELECT * FROM stories")
     fun getAllStoriesFavorite(): Flow<List<AllStoriesModel.stories>>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFavorite(stories: AllStoriesModel.stories)
 
     @Delete

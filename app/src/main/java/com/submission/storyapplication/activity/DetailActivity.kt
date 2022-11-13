@@ -36,6 +36,7 @@ class DetailActivity : AppCompatActivity() {
 
         fab_favorite.setOnClickListener {
             DetailViewModel.viewModelScope.launch(Dispatchers.IO){
+//                val check = DetailViewModel.checkFavorite()
                 val response= DetailViewModel.addFavorite(data)
                 when(response){
                     is Resources.Success->{
