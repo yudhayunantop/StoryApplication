@@ -6,7 +6,7 @@ import com.submission.storyapplication.domain.useCase.FavoriteUseCase
 import kotlinx.coroutines.flow.Flow
 
 class FavoriteInteractor (val favoriteRepository: IFavoriteRerpository): FavoriteUseCase{
-    override fun getAllStoriesFavorite(): Flow<List<AllStoriesModel.stories>>{
+    override fun getAllStoriesFavorite(): List<AllStoriesModel.stories>{
         return favoriteRepository.getAllStoriesFavorite()
     }
     override suspend fun insertFavorite(stories: AllStoriesModel.stories){

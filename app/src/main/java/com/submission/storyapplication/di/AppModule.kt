@@ -19,14 +19,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-val networkModule= module{
+val networkModule = module {
     single {
         OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
 //          Tambah waktu agar tidak timeout
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS )
+            .writeTimeout(30, TimeUnit.SECONDS)
             .build()
     }
     single {
@@ -40,25 +40,26 @@ val networkModule= module{
     }
 }
 
-val repositoryModule= module{
-    single<ILoginRepository>{LoginRepository(get())}
-    single<IRegisterRepository>{RegisterRepository(get())}
-    single<IMapsRepository>{MapsRepository(get())}
-    single<IAllStoriesRepository>{StoriesRepository(get(),get())}
-    single<IFavoriteRerpository>{FavoriteRepository(get())}
+val repositoryModule = module {
+    single<ILoginRepository> { LoginRepository(get()) }
+    single<IRegisterRepository> { RegisterRepository(get()) }
+    single<IMapsRepository> { MapsRepository(get()) }
+    single<IAllStoriesRepository> { StoriesRepository(get(), get()) }
+    single<IFavoriteRerpository> { FavoriteRepository(get()) }
 }
 
 val viewModelModule = module {
     viewModel { LoginViewModel(get()) }
-    viewModel{MapsViewModel(get())}
-    viewModel{RegisterViewModel(get())}
-    viewModel{MainViewModel(get())}
-    viewModel{AddStoriesViewModel(get())}
-    viewModel{DetailViewModel(get())}
+    viewModel { MapsViewModel(get()) }
+    viewModel { RegisterViewModel(get()) }
+    viewModel { MainViewModel(get()) }
+    viewModel { AddStoriesViewModel(get()) }
+    viewModel { DetailViewModel(get()) }
+    viewModel { FavoriteViewModel(get()) }
 }
 
-val databaseModul = module{
-    single{
+val databaseModul = module {
+    single {
         Room.databaseBuilder(
             androidContext(),
             StoriesDatabase::class.java, "stories_database.db"
@@ -66,16 +67,16 @@ val databaseModul = module{
             .fallbackToDestructiveMigration()
             .build()
     }
-    factory{
+    factory {
         get<StoriesDatabase>().storyDao()
     }
 }
 
-val interactorModul = module{
-    factory<LoginUseCase>{LoginInteractor(get())}
-    factory<RegisterUseCase>{ RegisterInteractor(get()) }
-    factory<MapsUseCase>{ MapsInteractor(get()) }
-    factory<AllStoriesUseCase>{ AllStoriesInteractor(get()) }
-    factory<AddStoriesUseCase>{ AddStoriesInteractor(get()) }
-    factory<FavoriteUseCase>{ FavoriteInteractor(get()) }
+val interactorModul = module {
+    factory<LoginUseCase> { LoginInteractor(get()) }
+    factory<RegisterUseCase> { RegisterInteractor(get()) }
+    factory<MapsUseCase> { MapsInteractor(get()) }
+    factory<AllStoriesUseCase> { AllStoriesInteractor(get()) }
+    factory<AddStoriesUseCase> { AddStoriesInteractor(get()) }
+    factory<FavoriteUseCase> { FavoriteInteractor(get()) }
 }

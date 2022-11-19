@@ -21,10 +21,12 @@ import androidx.recyclerview.widget.DiffUtil
 class StoriesAdapter
     : PagingDataAdapter<AllStoriesModel.stories, StoriesAdapter.ListViewHolder>(DIFF_CALLBACK) {
 
-    override fun onCreateViewHolder(viewGroup: ViewGroup, position: Int) : ListViewHolder{
-        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.item_story, viewGroup, false)
+    override fun onCreateViewHolder(viewGroup: ViewGroup, position: Int): ListViewHolder {
+        val view =
+            LayoutInflater.from(viewGroup.context).inflate(R.layout.item_story, viewGroup, false)
         return ListViewHolder(view)
     }
+
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it) }
     }
@@ -35,36 +37,43 @@ class StoriesAdapter
         private var tvDesc: TextView = itemView.findViewById(R.id.tv_item_desc)
 
         fun bind(stories: AllStoriesModel.stories) {
-                Glide.with(itemView.context)
-                    .load(stories.photoUrl)
-                    .apply(RequestOptions().override(55, 55))
-                    .into(imgPhoto)
-                tvName.text = stories.name
+            Glide.with(itemView.context)
+                .load(stories.photoUrl)
+                .apply(RequestOptions().override(55, 55))
+                .into(imgPhoto)
+            tvName.text = stories.name
+            tvDesc.text = stories.description
 
-                itemView.setOnClickListener {
-                    val intent = Intent(itemView.context, DetailActivity::class.java)
-                    intent.putExtra("data", stories)
+            itemView.setOnClickListener {
+                val intent = Intent(itemView.context, DetailActivity::class.java)
+                intent.putExtra("data", stories)
 
-                    val optionsCompat: ActivityOptionsCompat =
-                        ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            itemView.context as Activity,
-                            Pair(imgPhoto, "profile"),
-                            Pair(tvName, "name"),
-                            Pair(tvDesc,"description")
-                        )
+                val optionsCompat: ActivityOptionsCompat =
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        itemView.context as Activity,
+                        Pair(imgPhoto, "profile"),
+                        Pair(tvName, "name"),
+                        Pair(tvDesc, "description")
+                    )
 
-                    itemView.context.startActivity(intent, optionsCompat.toBundle())
-                }
+                itemView.context.startActivity(intent, optionsCompat.toBundle())
             }
+        }
     }
 
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<AllStoriesModel.stories>() {
-            override fun areItemsTheSame(oldItem: AllStoriesModel.stories, newItem: AllStoriesModel.stories): Boolean {
+            override fun areItemsTheSame(
+                oldItem: AllStoriesModel.stories,
+                newItem: AllStoriesModel.stories
+            ): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: AllStoriesModel.stories, newItem: AllStoriesModel.stories): Boolean {
+            override fun areContentsTheSame(
+                oldItem: AllStoriesModel.stories,
+                newItem: AllStoriesModel.stories
+            ): Boolean {
                 return oldItem.id == newItem.id
             }
         }

@@ -7,11 +7,11 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface StoryDao {
     @Query("SELECT * FROM stories")
-    fun getAllStoriesFavorite(): Flow<List<AllStoriesModel.stories>>
+    fun getAllStoriesFavorite(): List<AllStoriesModel.stories>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFavorite(stories: AllStoriesModel.stories)
 
     @Delete
-    suspend fun  deleteFavorite(stories: AllStoriesModel.stories)
+    suspend fun deleteFavorite(stories: AllStoriesModel.stories)
 }

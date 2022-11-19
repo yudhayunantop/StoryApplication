@@ -6,7 +6,7 @@ import com.submission.storyapplication.domain.repoInterface.IFavoriteRerpository
 import kotlinx.coroutines.flow.Flow
 
 class FavoriteRepository(val storyDao: StoryDao): IFavoriteRerpository{
-    override fun getAllStoriesFavorite(): Flow<List<AllStoriesModel.stories>> {
+    override fun getAllStoriesFavorite(): List<AllStoriesModel.stories> {
         return storyDao.getAllStoriesFavorite()
     }
 
