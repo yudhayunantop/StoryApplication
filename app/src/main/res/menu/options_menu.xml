@@ -5,6 +5,10 @@
             android:title="@string/maps" />
     </group>
     <group android:menuCategory="container">
+        <item android:id="@+id/favorite"
+            android:title="@string/favorite" />
+    </group>
+    <group android:menuCategory="container">
         <item android:id="@+id/logout"
         android:title="@string/logout" />
     </group>

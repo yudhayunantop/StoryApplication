@@ -32,6 +32,7 @@ class StoriesAdapter
     class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private var imgPhoto: ImageView = itemView.findViewById(R.id.iv_item_photo)
         private var tvName: TextView = itemView.findViewById(R.id.tv_item_name)
+        private var tvDesc: TextView = itemView.findViewById(R.id.tv_item_desc)
 
         fun bind(stories: AllStoriesModel.stories) {
                 Glide.with(itemView.context)
@@ -49,6 +50,7 @@ class StoriesAdapter
                             itemView.context as Activity,
                             Pair(imgPhoto, "profile"),
                             Pair(tvName, "name"),
+                            Pair(tvDesc,"description")
                         )
 
                     itemView.context.startActivity(intent, optionsCompat.toBundle())

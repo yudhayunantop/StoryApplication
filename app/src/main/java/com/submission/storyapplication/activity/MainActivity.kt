@@ -66,6 +66,11 @@ class MainActivity : AppCompatActivity() {
                 finish()
                 return true
             }
+            R.id.favorite ->{
+                val i = Intent(this, FavoriteActivity::class.java)
+                startActivity(i)
+                return true
+            }
             else -> return true
         }
     }

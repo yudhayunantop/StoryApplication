@@ -12,4 +12,6 @@ import com.submission.storyapplication.repository.StoriesRepository
 class MainViewModel(storiesRepository: AllStoriesUseCase) : ViewModel() {
     val stories: LiveData<PagingData<AllStoriesModel.stories>> =
         storiesRepository.get_all_stories().cachedIn(viewModelScope)
+
+
 }
