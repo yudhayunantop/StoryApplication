@@ -13,8 +13,8 @@ import com.submission.storyapplication.LiveDataTestUtils.Companion.getOrAwaitVal
 import com.submission.storyapplication.MainDispatcherRule
 import com.submission.storyapplication.MainViewModel
 import com.submission.storyapplication.adapter.StoriesAdapter
-import com.submission.storyapplication.domain.models.AllStoriesModel
-import com.submission.storyapplication.repository.StoriesRepository
+import com.submission.storyapplication.core.domain.models.AllStoriesModel
+import com.submission.storyapplication.core.repository.StoriesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -36,18 +36,18 @@ class MainViewModelTest {
     val mainDispatcherRules = MainDispatcherRule()
 
     @Mock
-    private lateinit var storiesRepository: StoriesRepository
+    private lateinit var storiesRepository: com.submission.storyapplication.core.repository.StoriesRepository
 
     @Test
     fun `when Get Quote Should Not Null and Return Success`() = runTest {
         val dummyQuote = LiveDataTestUtils.DataDummy.generateDummyStoriesResponse()
-        val data: PagingData<AllStoriesModel.stories> = StoryPagingSource.snapshot(dummyQuote)
-        val expectedQuote = MutableLiveData<PagingData<AllStoriesModel.stories>>()
+        val data: PagingData<com.submission.storyapplication.core.domain.models.AllStoriesModel.stories> = StoryPagingSource.snapshot(dummyQuote)
+        val expectedQuote = MutableLiveData<PagingData<com.submission.storyapplication.core.domain.models.AllStoriesModel.stories>>()
         expectedQuote.value = data
         Mockito.`when`(storiesRepository.getStories()).thenReturn(expectedQuote)
 
         val mainViewModel = MainViewModel(storiesRepository)
-        val actualQuote: PagingData<AllStoriesModel.stories> = mainViewModel.stories.getOrAwaitValue()
+        val actualQuote: PagingData<com.submission.storyapplication.core.domain.models.AllStoriesModel.stories> = mainViewModel.stories.getOrAwaitValue()
 
         val differ = AsyncPagingDataDiffer(
             diffCallback = StoriesAdapter.DIFF_CALLBACK,
@@ -63,18 +63,18 @@ class MainViewModelTest {
     }
 }
 
-class StoryPagingSource : PagingSource<Int, LiveData<List<AllStoriesModel.stories>>>() {
+class StoryPagingSource : PagingSource<Int, LiveData<List<com.submission.storyapplication.core.domain.models.AllStoriesModel.stories>>>() {
     companion object {
-        fun snapshot(items: List<AllStoriesModel.stories>): PagingData<AllStoriesModel.stories> {
+        fun snapshot(items: List<com.submission.storyapplication.core.domain.models.AllStoriesModel.stories>): PagingData<com.submission.storyapplication.core.domain.models.AllStoriesModel.stories> {
             return PagingData.from(items)
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, LiveData<List<AllStoriesModel.stories>>>): Int {
+    override fun getRefreshKey(state: PagingState<Int, LiveData<List<com.submission.storyapplication.core.domain.models.AllStoriesModel.stories>>>): Int {
         return 0
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LiveData<List<AllStoriesModel.stories>>> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LiveData<List<com.submission.storyapplication.core.domain.models.AllStoriesModel.stories>>> {
         return LoadResult.Page(emptyList(), 0, 1)
     }
 }

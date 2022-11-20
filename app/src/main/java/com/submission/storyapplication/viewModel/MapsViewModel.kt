@@ -1,14 +1,14 @@
 package com.submission.storyapplication.viewModel
 
 import androidx.lifecycle.ViewModel
-import com.submission.storyapplication.helper.Resources
-import com.submission.storyapplication.domain.models.AllStoriesModel
-import com.submission.storyapplication.domain.models.LoginModel
-import com.submission.storyapplication.domain.useCase.MapsUseCase
-import com.submission.storyapplication.repository.MapsRepository
+import com.submission.storyapplication.core.helper.Resources
+import com.submission.storyapplication.core.domain.models.AllStoriesModel
+import com.submission.storyapplication.core.domain.models.LoginModel
+import com.submission.storyapplication.core.domain.useCase.MapsUseCase
+import com.submission.storyapplication.core.repository.MapsRepository
 import kotlinx.coroutines.flow.flow
 
-class MapsViewModel (val useCase: MapsUseCase): ViewModel(){
+class MapsViewModel (val useCase: com.submission.storyapplication.core.domain.useCase.MapsUseCase): ViewModel(){
     fun maps(token: String)= flow {
         emit(Resources.Loading(data = null))
         try {

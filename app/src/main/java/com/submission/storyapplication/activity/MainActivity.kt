@@ -1,6 +1,7 @@
 package com.submission.storyapplication.activity
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -10,9 +11,8 @@ import com.submission.storyapplication.MainViewModel
 import com.submission.storyapplication.R
 import com.submission.storyapplication.adapter.StoriesAdapter
 import com.submission.storyapplication.databinding.ActivityMainBinding
-import com.submission.storyapplication.preferences.Preferences
-import com.submission.storyapplication.preferences.Preferences.clearData
-import kotlinx.android.synthetic.main.activity_main.*
+import com.submission.storyapplication.core.preferences.Preferences
+import com.submission.storyapplication.core.preferences.Preferences.clearData
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         getAllStories()
 
-        fab_create.setOnClickListener {
+        binding.fabCreate.setOnClickListener {
             intent = Intent(this@MainActivity, AddActivity::class.java)
             startActivity(intent)
         }
@@ -67,8 +67,10 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
             R.id.favorite ->{
-                val i = Intent(this, FavoriteActivity::class.java)
-                startActivity(i)
+//                val i = Intent(this, com.submission.storyapplication.favorit.activity.FavoriteActivity::class.java)
+                val uri = Uri.parse("storyapplication://favorite")
+                startActivity(Intent(Intent.ACTION_VIEW, uri))
+//                startActivity(i)
                 return true
             }
             else -> return true

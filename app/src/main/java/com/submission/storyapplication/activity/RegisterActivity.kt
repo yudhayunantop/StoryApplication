@@ -5,39 +5,30 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.Window
-import android.widget.EditText
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.submission.storyapplication.R
-import com.submission.storyapplication.api.ApiRetrofit
-import com.submission.storyapplication.helper.Resources
-import com.submission.storyapplication.domain.models.ResponseModel
-import com.submission.storyapplication.preferences.Preferences
+import com.submission.storyapplication.databinding.ActivityRegisterBinding
+import com.submission.storyapplication.core.helper.Resources
 import com.submission.storyapplication.viewModel.RegisterViewModel
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class RegisterActivity : AppCompatActivity() {
-    private lateinit var email: EditText
-    private lateinit var name: EditText
-    private lateinit var password: EditText
-    private lateinit var progressBar: ProgressBar
     private val RegisterViewModel: RegisterViewModel by viewModel()
     private var counter: Int = 0
     private var isLoading= MutableLiveData<Boolean>()
+    private lateinit var binding: ActivityRegisterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         supportActionBar?.hide()
         setContentView(R.layout.activity_register)
@@ -48,18 +39,14 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     fun setupView(){
-        email = findViewById(R.id.ed_register_email)
-        name = findViewById(R.id.ed_register_name)
-        password = findViewById(R.id.ed_register_password)
-        progressBar= findViewById(R.id.progressBar)
 
-        btn_register.setOnClickListener {
-            if (name.text.toString().isNotEmpty() &&
-                email.text.toString().isNotEmpty() &&
-                password.text.toString().isNotEmpty()
+        binding.btnRegister.setOnClickListener {
+            if (binding.edRegisterName.text.toString().isNotEmpty() &&
+                binding.edRegisterEmail.text.toString().isNotEmpty() &&
+                binding.edRegisterPassword.text.toString().isNotEmpty()
             ) {
                 if (counter==0){
-                    registerAccount(name.text.toString(), email.text.toString(), password.text.toString())
+                    registerAccount(binding.edRegisterName.text.toString(), binding.edRegisterEmail.text.toString(), binding.edRegisterPassword.text.toString())
                     counter++
                 }else{
                     Toast.makeText(applicationContext, "Loading...", Toast.LENGTH_SHORT)
@@ -111,9 +98,9 @@ class RegisterActivity : AppCompatActivity() {
     private fun loadingObserver(){
         isLoading.observe(this@RegisterActivity){ loadingState->
             if(loadingState){
-                progressBar.visibility= View.VISIBLE
+                binding.progressBar.visibility= View.VISIBLE
             }else{
-                progressBar.visibility= View.GONE
+                binding.progressBar.visibility= View.GONE
             }
         }
     }

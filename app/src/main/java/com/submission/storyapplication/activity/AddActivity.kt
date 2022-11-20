@@ -17,13 +17,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.lifecycle.viewModelScope
 import com.submission.storyapplication.databinding.ActivityAddBinding
-import com.submission.storyapplication.helper.Resources
-import com.submission.storyapplication.helper.createCustomTempFile
-import com.submission.storyapplication.helper.rotateBitmap
-import com.submission.storyapplication.helper.uriToFile
-import com.submission.storyapplication.preferences.Preferences
+import com.submission.storyapplication.core.helper.Resources
+import com.submission.storyapplication.core.helper.createCustomTempFile
+import com.submission.storyapplication.core.helper.rotateBitmap
+import com.submission.storyapplication.core.helper.uriToFile
+import com.submission.storyapplication.core.preferences.Preferences
 import com.submission.storyapplication.viewModel.AddStoriesViewModel
-import kotlinx.android.synthetic.main.activity_add.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
@@ -147,7 +146,7 @@ class AddActivity : AppCompatActivity() {
         if (getFile != null) {
             val file = reduceFileImage(getFile as File, counter)
 
-            val description = ed_add_description.text.toString().toRequestBody("text/plain".toMediaType())
+            val description = binding.edAddDescription.text.toString().toRequestBody("text/plain".toMediaType())
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
             val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
                 "photo",

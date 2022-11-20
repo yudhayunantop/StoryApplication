@@ -1,13 +1,13 @@
 package com.submission.storyapplication.viewModel
 
 import androidx.lifecycle.ViewModel
-import com.submission.storyapplication.domain.useCase.AddStoriesUseCase
-import com.submission.storyapplication.helper.Resources
+import com.submission.storyapplication.core.domain.useCase.AddStoriesUseCase
+import com.submission.storyapplication.core.helper.Resources
 import kotlinx.coroutines.flow.flow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
-class AddStoriesViewModel(val useCase: AddStoriesUseCase) : ViewModel() {
+class AddStoriesViewModel(val useCase: com.submission.storyapplication.core.domain.useCase.AddStoriesUseCase) : ViewModel() {
     fun addStories(token: String, description: RequestBody, photo: MultipartBody.Part) = flow {
         emit(Resources.Loading(data = null))
         try {

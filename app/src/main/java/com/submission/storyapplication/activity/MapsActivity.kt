@@ -15,9 +15,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.submission.storyapplication.R
 import com.submission.storyapplication.databinding.ActivityMapsBinding
-import com.submission.storyapplication.helper.Resources
-import com.submission.storyapplication.domain.models.AllStoriesModel
-import com.submission.storyapplication.preferences.Preferences
+import com.submission.storyapplication.core.helper.Resources
+import com.submission.storyapplication.core.domain.models.AllStoriesModel
+import com.submission.storyapplication.core.preferences.Preferences
 import com.submission.storyapplication.viewModel.MapsViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
@@ -29,7 +29,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
     private val MapsViewModel: MapsViewModel by viewModel()
-    private var itemMutableList: MutableLiveData<List<AllStoriesModel.stories>?> = MutableLiveData()
+    private var itemMutableList: MutableLiveData<List<com.submission.storyapplication.core.domain.models.AllStoriesModel.stories>?> = MutableLiveData()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,13 +1,13 @@
 package com.submission.storyapplication.viewModel
 
 import androidx.lifecycle.ViewModel
-import com.submission.storyapplication.helper.Resources
-import com.submission.storyapplication.domain.models.LoginModel
-import com.submission.storyapplication.domain.useCase.RegisterUseCase
-import com.submission.storyapplication.repository.RegisterRepository
+import com.submission.storyapplication.core.helper.Resources
+import com.submission.storyapplication.core.domain.models.LoginModel
+import com.submission.storyapplication.core.domain.useCase.RegisterUseCase
+import com.submission.storyapplication.core.repository.RegisterRepository
 import kotlinx.coroutines.flow.flow
 
-class RegisterViewModel (val useCase: RegisterUseCase): ViewModel(){
+class RegisterViewModel (val useCase: com.submission.storyapplication.core.domain.useCase.RegisterUseCase): ViewModel(){
     fun register(name:String, email: String, password: String)= flow {
         emit(Resources.Loading(data = null))
         try {

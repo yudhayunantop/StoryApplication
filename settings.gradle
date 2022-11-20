@@ -14,3 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "StoryApplication"
 include ':app'
+include ':core'
+include ':favorit'
