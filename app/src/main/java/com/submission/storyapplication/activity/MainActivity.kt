@@ -67,10 +67,8 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
             R.id.favorite ->{
-//                val i = Intent(this, com.submission.storyapplication.favorit.activity.FavoriteActivity::class.java)
                 val uri = Uri.parse("storyapplication://favorite")
                 startActivity(Intent(Intent.ACTION_VIEW, uri))
-//                startActivity(i)
                 return true
             }
             else -> return true

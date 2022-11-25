@@ -31,7 +31,6 @@ class RegisterActivity : AppCompatActivity() {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         supportActionBar?.hide()
-        setContentView(R.layout.activity_register)
 
         setupView()
         isLoading.value=false

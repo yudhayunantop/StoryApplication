@@ -25,7 +25,6 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var progressBar: ProgressBar
     private val LoginViewModel: LoginViewModel by viewModel()
     private var counter: Int = 0
     private lateinit var binding: ActivityLoginBinding
@@ -36,13 +35,12 @@ class LoginActivity : AppCompatActivity() {
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.progressBar.visibility= View.GONE
 
         Preferences.init(this)
 
         supportActionBar?.hide()
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        setContentView(R.layout.activity_login)
-
 
         if (preferences.contains("KEY_userId") &&
             preferences.contains("KEY_name") &&
@@ -56,7 +54,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun setupView() {
-        binding.progressBar.visibility= View.GONE
 
         binding.btnLogin.setOnClickListener {
             if (binding.edLoginEmail.text.toString().isNotEmpty() &&
@@ -92,6 +89,7 @@ class LoginActivity : AppCompatActivity() {
                 ).collect { result ->
                     when (result) {
                         is Resources.Success -> {
+                            binding.progressBar.visibility= View.GONE
                             saveUserId(result.data!!.userId!!)
                             saveName(result.data!!.name!!)
                             saveToken(result.data!!.token!!)
@@ -101,12 +99,13 @@ class LoginActivity : AppCompatActivity() {
                             finish()
                         }
                         is Resources.Error -> {
+                            binding.progressBar.visibility= View.GONE
                             Toast.makeText(applicationContext, result.message, Toast.LENGTH_SHORT)
                                 .show()
                             Log.e("LoginActivity", result.message.toString())
                         }
                         is Resources.Loading -> {
-                            progressBar.visibility= View.VISIBLE
+                            binding.progressBar.visibility= View.VISIBLE
                         }
                     }
                 }
