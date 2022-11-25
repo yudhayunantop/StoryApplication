@@ -1,7 +1,9 @@
 package com.submission.storyapplication.di
 
 import com.submission.storyapplication.MainViewModel
-import com.submission.storyapplication.viewModel.*
+import com.submission.storyapplication.core.domain.interactor.*
+import com.submission.storyapplication.core.domain.useCase.*
+import com.submission.storyapplication.ui.viewModel.*
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -15,33 +17,33 @@ val viewModelModule = module {
 }
 
 val interactorModul = module {
-    factory<com.submission.storyapplication.core.domain.useCase.LoginUseCase> {
-        com.submission.storyapplication.core.domain.interactor.LoginInteractor(
+    factory<LoginUseCase> {
+        LoginInteractor(
             get()
         )
     }
-    factory<com.submission.storyapplication.core.domain.useCase.RegisterUseCase> {
-        com.submission.storyapplication.core.domain.interactor.RegisterInteractor(
+    factory<RegisterUseCase> {
+        RegisterInteractor(
             get()
         )
     }
-    factory<com.submission.storyapplication.core.domain.useCase.MapsUseCase> {
-        com.submission.storyapplication.core.domain.interactor.MapsInteractor(
+    factory<MapsUseCase> {
+        MapsInteractor(
             get()
         )
     }
-    factory<com.submission.storyapplication.core.domain.useCase.AllStoriesUseCase> {
-        com.submission.storyapplication.core.domain.interactor.AllStoriesInteractor(
+    factory<AllStoriesUseCase> {
+        AllStoriesInteractor(
             get()
         )
     }
-    factory<com.submission.storyapplication.core.domain.useCase.AddStoriesUseCase> {
-        com.submission.storyapplication.core.domain.interactor.AddStoriesInteractor(
+    factory<AddStoriesUseCase> {
+        AddStoriesInteractor(
             get()
         )
     }
-    factory<com.submission.storyapplication.core.domain.useCase.FavoriteUseCase> {
-        com.submission.storyapplication.core.domain.interactor.FavoriteInteractor(
+    factory<FavoriteUseCase> {
+        FavoriteInteractor(
             get()
         )
     }

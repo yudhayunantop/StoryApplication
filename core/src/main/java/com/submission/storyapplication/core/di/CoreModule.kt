@@ -1,11 +1,12 @@
 package com.submission.storyapplication.core.di
 
 import androidx.room.Room
-import com.submission.storyapplication.core.api.ApiEndPoint
-import com.submission.storyapplication.core.database.StoriesDatabase
+import com.submission.storyapplication.core.data.remote.ApiEndPoint
+import com.submission.storyapplication.core.data.repository.*
+import com.submission.storyapplication.core.data.database.StoriesDatabase
+import com.submission.storyapplication.core.data.remote.RemoteDataSource
 import com.submission.storyapplication.core.domain.repoInterface.*
-import com.submission.storyapplication.core.helper.constant.baseUrl
-import com.submission.storyapplication.core.repository.*
+import com.submission.storyapplication.core.utils.constant.baseUrl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -41,6 +42,7 @@ val repositoryModule = module {
     single<IMapsRepository> { MapsRepository(get()) }
     single<IAllStoriesRepository> { StoriesRepository(get(), get()) }
     single<IFavoriteRerpository> { FavoriteRepository(get()) }
+    single{RemoteDataSource(get())}
 }
 
 val databaseModul = module {

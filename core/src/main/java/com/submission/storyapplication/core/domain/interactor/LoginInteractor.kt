@@ -1,12 +1,14 @@
 package com.submission.storyapplication.core.domain.interactor
 
 import com.submission.storyapplication.core.domain.repoInterface.ILoginRepository
-import com.submission.storyapplication.core.domain.models.LoginModel
 import com.submission.storyapplication.core.domain.useCase.LoginUseCase
+import com.submission.storyapplication.core.data.remote.response.LoginModel
+import com.submission.storyapplication.core.utils.Resources
+import kotlinx.coroutines.flow.Flow
 
-class LoginInteractor(val loginRepository: com.submission.storyapplication.core.domain.repoInterface.ILoginRepository):
-    com.submission.storyapplication.core.domain.useCase.LoginUseCase {
-    override suspend fun login(email: String, password: String): com.submission.storyapplication.core.domain.models.LoginModel {
+class LoginInteractor(val loginRepository: ILoginRepository):
+    LoginUseCase {
+    override suspend fun login(email: String, password: String): Flow<Resources<LoginModel.login>> {
         return loginRepository.login(email, password)
     }
 }

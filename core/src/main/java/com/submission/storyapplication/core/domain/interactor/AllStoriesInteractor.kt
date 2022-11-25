@@ -5,13 +5,13 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
-import com.submission.storyapplication.core.domain.models.AllStoriesModel
 import com.submission.storyapplication.core.domain.repoInterface.IAllStoriesRepository
 import com.submission.storyapplication.core.domain.useCase.AllStoriesUseCase
+import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 
-class AllStoriesInteractor(val storiesRepository: com.submission.storyapplication.core.domain.repoInterface.IAllStoriesRepository):
-    com.submission.storyapplication.core.domain.useCase.AllStoriesUseCase {
-    override fun get_all_stories(): LiveData<PagingData<com.submission.storyapplication.core.domain.models.AllStoriesModel.stories>> {
+class AllStoriesInteractor(val storiesRepository: IAllStoriesRepository):
+    AllStoriesUseCase {
+    override fun get_all_stories(): LiveData<PagingData<AllStoriesModel.stories>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 5

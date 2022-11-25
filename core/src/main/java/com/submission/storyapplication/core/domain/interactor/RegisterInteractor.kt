@@ -1,12 +1,14 @@
 package com.submission.storyapplication.core.domain.interactor
 
-import com.submission.storyapplication.core.domain.models.ResponseModel
 import com.submission.storyapplication.core.domain.repoInterface.IRegisterRepository
 import com.submission.storyapplication.core.domain.useCase.RegisterUseCase
+import com.submission.storyapplication.core.data.remote.response.ResponseModel
+import com.submission.storyapplication.core.utils.Resources
+import kotlinx.coroutines.flow.Flow
 
-class RegisterInteractor(val registerRepository: com.submission.storyapplication.core.domain.repoInterface.IRegisterRepository):
-    com.submission.storyapplication.core.domain.useCase.RegisterUseCase {
-    override suspend fun register(name: String, email: String, password: String): com.submission.storyapplication.core.domain.models.ResponseModel {
+class RegisterInteractor(val registerRepository: IRegisterRepository):
+    RegisterUseCase {
+    override suspend fun register(name: String, email: String, password: String): Flow<Resources<ResponseModel>> {
         return registerRepository.register(name, email, password)
     }
 }

@@ -3,7 +3,7 @@ package com.submission.storyapplication
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import com.submission.storyapplication.core.domain.models.AllStoriesModel
+import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
@@ -44,10 +44,10 @@ class LiveDataTestUtils {
         }
     }
     object DataDummy {
-        fun generateDummyStoriesResponse(): List<com.submission.storyapplication.core.domain.models.AllStoriesModel.stories> {
-            val items: MutableList<com.submission.storyapplication.core.domain.models.AllStoriesModel.stories> = arrayListOf()
+        fun generateDummyStoriesResponse(): List<AllStoriesModel.stories> {
+            val items: MutableList<AllStoriesModel.stories> = arrayListOf()
             for (i in 0..100) {
-                val stories = com.submission.storyapplication.core.domain.models.AllStoriesModel.stories(
+                val stories = AllStoriesModel.stories(
                     "$i",
                     "Budi",
                     "Lorem ipsum",

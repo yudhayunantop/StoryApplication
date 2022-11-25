@@ -1,19 +1,18 @@
 package com.submission.storyapplication.core.domain.interactor
 
-import com.submission.storyapplication.core.domain.models.AllStoriesModel
 import com.submission.storyapplication.core.domain.repoInterface.IFavoriteRerpository
 import com.submission.storyapplication.core.domain.useCase.FavoriteUseCase
-import kotlinx.coroutines.flow.Flow
+import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 
-class FavoriteInteractor (val favoriteRepository: com.submission.storyapplication.core.domain.repoInterface.IFavoriteRerpository):
-    com.submission.storyapplication.core.domain.useCase.FavoriteUseCase {
-    override fun getAllStoriesFavorite(): List<com.submission.storyapplication.core.domain.models.AllStoriesModel.stories>{
+class FavoriteInteractor (val favoriteRepository: IFavoriteRerpository):
+    FavoriteUseCase {
+    override fun getAllStoriesFavorite(): List<AllStoriesModel.stories>{
         return favoriteRepository.getAllStoriesFavorite()
     }
-    override suspend fun insertFavorite(stories: com.submission.storyapplication.core.domain.models.AllStoriesModel.stories){
+    override suspend fun insertFavorite(stories: AllStoriesModel.stories){
         return favoriteRepository.insertFavorite(stories)
     }
-    override suspend fun  deleteFavorite(stories: com.submission.storyapplication.core.domain.models.AllStoriesModel.stories) {
+    override suspend fun  deleteFavorite(stories: AllStoriesModel.stories) {
         return favoriteRepository.deleteFavorite(stories)
     }
 }
