@@ -44,6 +44,7 @@ class MainViewModelTest {
         val data: PagingData<AllStoriesModel.stories> = StoryPagingSource.snapshot(dummyQuote)
         val expectedQuote = MutableLiveData<PagingData<AllStoriesModel.stories>>()
         expectedQuote.value = data
+//        getStories() error karena response berubah
         Mockito.`when`(storiesRepository.getStories()).thenReturn(expectedQuote)
 
         val mainViewModel = MainViewModel(storiesRepository)
