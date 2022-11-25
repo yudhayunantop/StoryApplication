@@ -2,11 +2,11 @@ package com.submission.storyapplication.core.data.database
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.submission.storyapplication.core.data.remote.ApiEndPoint
+import com.submission.storyapplication.core.data.remote.RemoteDataSource
 import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 import com.submission.storyapplication.core.utils.preferences.Preferences
 
-class StoriesPagingSource(private val apiEndPoint: ApiEndPoint) : PagingSource<Int, AllStoriesModel.stories>() {
+class StoriesPagingSource(private val remoteDataSource: RemoteDataSource) : PagingSource<Int, AllStoriesModel.stories>() {
     private companion object {
         const val INITIAL_PAGE_INDEX = 1
     }
@@ -14,7 +14,7 @@ class StoriesPagingSource(private val apiEndPoint: ApiEndPoint) : PagingSource<I
         return try {
             val position = params.key ?: INITIAL_PAGE_INDEX
             val token =  "Bearer ${Preferences.getToken()}"
-            val responseData = apiEndPoint.get_all_stories(
+            val responseData = remoteDataSource.get_all_stories(
                 token,
                 position,
                 params.loadSize)

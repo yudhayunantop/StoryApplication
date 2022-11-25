@@ -5,24 +5,26 @@ import com.submission.storyapplication.core.domain.repoInterface.IAllStoriesRepo
 import com.submission.storyapplication.core.data.remote.response.ResponseModel
 import com.submission.storyapplication.core.data.database.StoriesDatabase
 import com.submission.storyapplication.core.data.database.StoriesPagingSource
+import com.submission.storyapplication.core.data.remote.RemoteDataSource
+import com.submission.storyapplication.core.utils.Resources
+import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 class StoriesRepository(
     private val storiesDatabase: StoriesDatabase,
-    private val apiEndPoint: ApiEndPoint
+    private val remoteDataSource: RemoteDataSource
 ) : IAllStoriesRepository {
     override fun getPagingSource() =
-        StoriesPagingSource(apiEndPoint)
+        StoriesPagingSource(remoteDataSource)
     override suspend fun addStories(
         token: String,
         description: RequestBody,
         photo: MultipartBody.Part
     )
-            : ResponseModel = apiEndPoint.add_story(
+    : Flow<Resources<ResponseModel>> = remoteDataSource.add_story(
         token,
         description,
         photo
     )
-
 }
