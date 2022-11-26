@@ -1,4 +1,4 @@
-package com.submission.storyapplication.core.data.database
+package com.submission.storyapplication.core.data.local.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

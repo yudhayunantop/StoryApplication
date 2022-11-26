@@ -7,9 +7,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 import com.submission.storyapplication.core.utils.Resources
-import com.submission.storyapplication.favorit.ui.adapter.FavoriteAdapter
 import com.submission.storyapplication.favorit.databinding.ActivityFavoriteBinding
 import com.submission.storyapplication.favorit.di.favoriteModule
+import com.submission.storyapplication.favorit.ui.adapter.FavoriteAdapter
 import com.submission.storyapplication.favorit.ui.viewModel.FavoriteViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
@@ -21,7 +21,7 @@ class FavoriteActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFavoriteBinding
     private val favoriteViewModel: FavoriteViewModel by viewModel()
-    lateinit var adapter : FavoriteAdapter
+    lateinit var adapter: FavoriteAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,10 +39,23 @@ class FavoriteActivity : AppCompatActivity() {
     private fun onClickList(adapter: FavoriteAdapter) {
         adapter.setOnClickListener(object : FavoriteAdapter.OnClickListener {
             override fun onButtonDeleteSelected(selectedStories: AllStoriesModel.stories) {
-                Toast.makeText(this@FavoriteActivity, "Stories Item Deleted", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@FavoriteActivity, "Stories Item Deleted", Toast.LENGTH_SHORT)
+                    .show()
                 favoriteViewModel.viewModelScope.launch {
-                    favoriteViewModel.delete(selectedStories)
-                    getAllStoriesFavorite()
+                    favoriteViewModel.delete(selectedStories).collect { resource ->
+                        when (resource) {
+                            is Resources.Success -> {
+                                getAllStoriesFavorite()
+                            }
+                            is Resources.Error -> {
+                                getAllStoriesFavorite()
+                            }
+                            is Resources.Loading -> {
+
+                            }
+                        }
+                    }
+
                 }
             }
         })

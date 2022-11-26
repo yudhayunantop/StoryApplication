@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
-import com.submission.storyapplication.databinding.ActivityDetailBinding
 import com.submission.storyapplication.core.utils.Resources
+import com.submission.storyapplication.databinding.ActivityDetailBinding
 import com.submission.storyapplication.ui.viewModel.DetailViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,25 +36,25 @@ class DetailActivity : AppCompatActivity() {
 
         binding.fabFavorite.setOnClickListener {
             DetailViewModel.viewModelScope.launch(Dispatchers.IO){
-//                val check = DetailViewModel.checkFavorite()
-                val response= DetailViewModel.addFavorite(data)
-                when(response){
-                    is Resources.Success->{
-                        DetailViewModel.viewModelScope.launch(Dispatchers.Main) {
-                            Toast.makeText(applicationContext, "Favorite Added!!!", Toast.LENGTH_SHORT)
-                                .show()
+                DetailViewModel.addFavorite(data).collect{
+                    when(it){
+                        is Resources.Success->{
+                            DetailViewModel.viewModelScope.launch(Dispatchers.Main) {
+                                Toast.makeText(applicationContext, "Favorite Added!!!", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
                         }
-                    }
-                    is Resources.Error -> {
-                        DetailViewModel.viewModelScope.launch(Dispatchers.Main) {
-                            Toast.makeText(applicationContext, response.message, Toast.LENGTH_SHORT)
-                                .show()
+                        is Resources.Error -> {
+                            DetailViewModel.viewModelScope.launch(Dispatchers.Main) {
+                                Toast.makeText(applicationContext, it.message, Toast.LENGTH_SHORT)
+                                    .show()
+                            }
                         }
-                    }
-                    is Resources.Loading-> {
-                        DetailViewModel.viewModelScope.launch(Dispatchers.Main) {
-                            Toast.makeText(applicationContext, "Loading...", Toast.LENGTH_SHORT)
-                                .show()
+                        is Resources.Loading-> {
+                            DetailViewModel.viewModelScope.launch(Dispatchers.Main) {
+                                Toast.makeText(applicationContext, "Loading...", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
                         }
                     }
                 }
