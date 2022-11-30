@@ -8,7 +8,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 interface IAllStoriesRepository {
-//    suspend fun get_all_stories(token: String, page: String, size: String): LiveData<PagingData<AllStoriesModel.stories>>
     fun getPagingSource(): StoriesPagingSource
     suspend fun addStories(
             token:String,

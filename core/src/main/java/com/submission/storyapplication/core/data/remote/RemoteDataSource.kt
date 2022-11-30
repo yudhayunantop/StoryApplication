@@ -57,6 +57,22 @@ class RemoteDataSource(private val apiEndPoint: ApiEndPoint) {
     }
     suspend fun get_all_stories(token: String, position: Int, loadSize: Int) =apiEndPoint.get_all_stories(token, position, loadSize)
 
+    suspend fun getAllStories(token: String, position: Int, loadSize: Int) : Flow<Resources<List<AllStoriesModel.stories>>> {
+        return flow {
+            emit(Resources.Loading(data = null))
+            try {
+                val responseAllStories =  apiEndPoint.get_all_stories(token = token, page = position, size = loadSize)
+                if (responseAllStories.error == false) {
+                    emit(Resources.Success(data = responseAllStories.listStory as List<AllStoriesModel.stories>))
+                } else {
+                    emit(Resources.Error(message = responseAllStories.message.toString()))
+                }
+            } catch (e: Exception) {
+                emit(Resources.Error(message = e.message.toString()))
+            }
+        }
+    }
+
     suspend fun get_all_stories_location(token: String): Flow<Resources<List<AllStoriesModel.stories>>>{
         return flow{
             emit(Resources.Loading(data = null))
