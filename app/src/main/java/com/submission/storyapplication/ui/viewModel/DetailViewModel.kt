@@ -6,4 +6,6 @@ import com.submission.storyapplication.core.domain.useCase.FavoriteUseCase
 
 class DetailViewModel(val favoriteUseCase: FavoriteUseCase) : ViewModel() {
     suspend fun addFavorite(stories: AllStoriesModel.stories)= favoriteUseCase.insertFavorite(stories)
+    fun isRowExist(id:String) = favoriteUseCase.isRowExist(id = id)
+    suspend fun delete(stories: AllStoriesModel.stories)= favoriteUseCase.deleteFavorite(stories)
 }

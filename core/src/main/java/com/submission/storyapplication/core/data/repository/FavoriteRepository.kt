@@ -54,7 +54,7 @@ class FavoriteRepository(val localDataSource: LocalDataSource) :
             emit(Resources.Loading(data = null))
             try {
                 localDataSource.isRowExist(id)
-                emit(Resources.Success(data = "Success"))
+                emit(Resources.Success(data = true))
             } catch (e: Exception) {
                 emit(Resources.Error(message = e.message.toString()))
             }

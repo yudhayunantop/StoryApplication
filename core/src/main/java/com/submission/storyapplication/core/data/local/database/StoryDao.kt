@@ -9,7 +9,8 @@ interface StoryDao {
     @Query("SELECT * FROM stories")
     fun getAllStoriesFavorite(): Flow<List<AllStoriesModel.stories>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+//    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     suspend fun insertFavorite(stories: AllStoriesModel.stories)
 
     @Delete
