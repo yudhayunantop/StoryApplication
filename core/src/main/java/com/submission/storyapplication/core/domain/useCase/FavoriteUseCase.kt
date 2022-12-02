@@ -8,4 +8,5 @@ interface FavoriteUseCase {
     fun getAllStoriesFavorite(): Flow<Resources<List<AllStoriesModel.stories>>>
     suspend fun insertFavorite(stories: AllStoriesModel.stories):Flow<Resources<String>>
     suspend fun  deleteFavorite(stories: AllStoriesModel.stories): Flow<Resources<String>>
+    fun isRowExist(id:String): Flow<Resources<Boolean>>
 }

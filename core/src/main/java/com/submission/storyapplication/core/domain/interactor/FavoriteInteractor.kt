@@ -17,4 +17,8 @@ class FavoriteInteractor (val favoriteRepository: IFavoriteRepository):
     override suspend fun  deleteFavorite(stories: AllStoriesModel.stories): Flow<Resources<String>> {
         return favoriteRepository.deleteFavorite(stories)
     }
+
+    override fun isRowExist(id: String): Flow<Resources<Boolean>> {
+        return favoriteRepository.isRowExist(id)
+    }
 }

@@ -23,7 +23,6 @@ class FavoriteRepository(val localDataSource: LocalDataSource) :
                 emit(Resources.Error(message = e.message.toString()))
             }
         }
-
     }
 
     override suspend fun insertFavorite(stories: AllStoriesModel.stories): Flow<Resources<String>> {
@@ -43,6 +42,18 @@ class FavoriteRepository(val localDataSource: LocalDataSource) :
             emit(Resources.Loading(data = null))
             try {
                 localDataSource.deleteFavorite(stories)
+                emit(Resources.Success(data = "Success"))
+            } catch (e: Exception) {
+                emit(Resources.Error(message = e.message.toString()))
+            }
+        }
+    }
+
+    override fun isRowExist(id : String): Flow<Resources<Boolean>> {
+        return flow {
+            emit(Resources.Loading(data = null))
+            try {
+                localDataSource.isRowExist(id)
                 emit(Resources.Success(data = "Success"))
             } catch (e: Exception) {
                 emit(Resources.Error(message = e.message.toString()))

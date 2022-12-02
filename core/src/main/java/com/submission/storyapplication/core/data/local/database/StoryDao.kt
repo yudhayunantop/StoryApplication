@@ -14,4 +14,7 @@ interface StoryDao {
 
     @Delete
     suspend fun deleteFavorite(stories: AllStoriesModel.stories)
+
+    @Query("SELECT EXISTS(SELECT * FROM stories WHERE id = :id)")
+    fun isRowIsExist(id : String) : Boolean
 }
