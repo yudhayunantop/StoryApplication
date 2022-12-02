@@ -36,34 +36,8 @@ class FavoriteActivity : AppCompatActivity() {
         getAllStoriesFavorite()
     }
 
-    private fun onClickList(adapter: FavoriteAdapter) {
-        adapter.setOnClickListener(object : FavoriteAdapter.OnClickListener {
-            override fun onButtonDeleteSelected(selectedStories: AllStoriesModel.stories) {
-                Toast.makeText(this@FavoriteActivity, "Stories Item Deleted", Toast.LENGTH_SHORT)
-                    .show()
-                favoriteViewModel.viewModelScope.launch {
-                    favoriteViewModel.delete(selectedStories).collect { resource ->
-                        when (resource) {
-                            is Resources.Success -> {
-                                getAllStoriesFavorite()
-                            }
-                            is Resources.Error -> {
-                                getAllStoriesFavorite()
-                            }
-                            is Resources.Loading -> {
-
-                            }
-                        }
-                    }
-
-                }
-            }
-        })
-    }
-
     private fun initializeAdapter() {
         adapter = FavoriteAdapter()
-        onClickList(adapter)
         binding.listFavoriteStory.adapter = adapter
     }
 

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
-import com.submission.storyapplication.core.databinding.ItemStoryFavoriteBinding
+import com.submission.storyapplication.core.databinding.ItemStoryBinding
 import com.submission.storyapplication.ui.activity.DetailActivity
 
 class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
@@ -28,12 +28,12 @@ class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
     }
 
 
-    class ViewHolder(itemView: ItemStoryFavoriteBinding) : RecyclerView.ViewHolder(itemView.root) {
-         var binding: ItemStoryFavoriteBinding = itemView
+    class ViewHolder(itemView: ItemStoryBinding) : RecyclerView.ViewHolder(itemView.root) {
+         var binding: ItemStoryBinding = itemView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val inflater = ItemStoryFavoriteBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val inflater = ItemStoryBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ViewHolder(inflater)
     }
 
@@ -46,9 +46,6 @@ class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
                 .into(binding.ivItemPhoto)
             binding.tvItemName.text = current.name
             binding.tvItemDesc.text = current.description
-            binding.btnDelete.setOnClickListener {
-                onClickListener.onButtonDeleteSelected(current)
-            }
 
             itemView.setOnClickListener {
                 val intent = Intent(itemView.context, DetailActivity::class.java)
