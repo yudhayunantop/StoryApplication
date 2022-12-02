@@ -69,8 +69,6 @@ class DetailActivity : AppCompatActivity() {
                                             }
                                         }
                                     }
-                                    binding.fabDelete.visibility= View.GONE
-                                    binding.fabFavorite.visibility= View.VISIBLE
                                 }
                             }else{
                                 binding.fabFavorite.visibility= View.VISIBLE
@@ -100,8 +98,6 @@ class DetailActivity : AppCompatActivity() {
                                         }
                                     }
                                 }
-                                binding.fabFavorite.visibility= View.GONE
-                                binding.fabDelete.visibility= View.VISIBLE
                             }
                         }
                     }

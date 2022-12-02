@@ -53,8 +53,7 @@ class FavoriteRepository(val localDataSource: LocalDataSource) :
         return flow {
             emit(Resources.Loading(data = null))
             try {
-                localDataSource.isRowExist(id)
-                emit(Resources.Success(data = true))
+                emit(Resources.Success(data = localDataSource.isRowExist(id)))
             } catch (e: Exception) {
                 emit(Resources.Error(message = e.message.toString()))
             }
