@@ -9,6 +9,7 @@ import com.submission.storyapplication.core.data.local.entity.StoriesEntity
 import com.submission.storyapplication.core.domain.repoInterface.IAllStoriesRepository
 import com.submission.storyapplication.core.domain.useCase.AllStoriesUseCase
 import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
+import kotlinx.coroutines.flow.Flow
 
 class AllStoriesInteractor(val storiesRepository: IAllStoriesRepository):
     AllStoriesUseCase {
@@ -22,4 +23,6 @@ class AllStoriesInteractor(val storiesRepository: IAllStoriesRepository):
             }
         ).liveData
     }
+
+    override fun getAllStories(): Flow<PagingData<StoriesEntity>> = storiesRepository.getPagingSourceFlow()
 }

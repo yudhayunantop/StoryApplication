@@ -6,5 +6,5 @@ import com.submission.storyapplication.core.utils.Resources
 import kotlinx.coroutines.flow.Flow
 
 interface IRegisterRepository {
-    suspend fun register(name: String, email: String, password: String): Flow<ApiResponse<ResponseModel>>
+    suspend fun register(name: String, email: String, password: String): Flow<Resources<ResponseModel>>
 }

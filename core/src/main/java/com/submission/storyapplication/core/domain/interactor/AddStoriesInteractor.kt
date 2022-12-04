@@ -1,5 +1,6 @@
 package com.submission.storyapplication.core.domain.interactor
 
+import com.submission.storyapplication.core.data.remote.network.ApiResponse
 import com.submission.storyapplication.core.domain.repoInterface.IAllStoriesRepository
 import com.submission.storyapplication.core.domain.useCase.AddStoriesUseCase
 import com.submission.storyapplication.core.data.remote.response.ResponseModel

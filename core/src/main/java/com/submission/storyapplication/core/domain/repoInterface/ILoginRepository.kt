@@ -6,5 +6,5 @@ import com.submission.storyapplication.core.utils.Resources
 import kotlinx.coroutines.flow.Flow
 
 interface ILoginRepository {
- suspend fun login(email: String, password: String): Flow<ApiResponse<LoginModel.login>>
+ suspend fun login(email: String, password: String): Flow<Resources<LoginModel.login>>
 }

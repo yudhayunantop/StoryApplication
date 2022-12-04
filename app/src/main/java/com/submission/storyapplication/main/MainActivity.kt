@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.submission.storyapplication.R
 import com.submission.storyapplication.add.AddActivity
@@ -18,6 +19,11 @@ import com.submission.storyapplication.core.utils.Preferences.clearData
 import com.submission.storyapplication.detail.DetailActivity
 import com.submission.storyapplication.login.LoginActivity
 import com.submission.storyapplication.maps.MapsActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -46,9 +52,15 @@ class MainActivity : AppCompatActivity() {
     private fun getAllStories(){
         val adapter= StoriesAdapter()
         binding.listStory.adapter=adapter
-        mainViewModel.stories.observe(this, {
-            adapter.submitData(lifecycle, it)
-        })
+        mainViewModel.viewModelScope.launch {
+            mainViewModel.storiesFlow.collectLatest {
+                adapter.submitData(it)
+            }
+        }
+
+//        mainViewModel.stories.observe(this, {
+//            adapter.submitData(lifecycle, it)
+//        })
 
         adapter.setOnClickListener(object : StoriesAdapter.OnClickListener{
             override fun onItemClick(stories: StoriesEntity) {
