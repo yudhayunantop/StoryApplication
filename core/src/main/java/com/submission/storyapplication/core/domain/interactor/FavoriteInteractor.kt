@@ -12,10 +12,10 @@ class FavoriteInteractor (val favoriteRepository: IFavoriteRepository):
     override fun getAllStoriesFavorite(): Flow<Resources<List<Stories>>> {
         return favoriteRepository.getAllStoriesFavorite()
     }
-    override suspend fun insertFavorite(stories: StoriesEntity):Flow<Resources<String>>{
+    override suspend fun insertFavorite(stories: Stories):Flow<Resources<String>>{
         return favoriteRepository.insertFavorite(stories)
     }
-    override suspend fun  deleteFavorite(stories: StoriesEntity): Flow<Resources<String>> {
+    override suspend fun  deleteFavorite(stories: Stories): Flow<Resources<String>> {
         return favoriteRepository.deleteFavorite(stories)
     }
 

@@ -27,11 +27,11 @@ class FavoriteRepository(val localDataSource: LocalDataSource) :
         }
     }
 
-    override suspend fun insertFavorite(stories: StoriesEntity): Flow<Resources<String>> {
+    override suspend fun insertFavorite(stories: Stories): Flow<Resources<String>> {
         return flow {
             emit(Resources.Loading(data = null))
             try {
-                localDataSource.insertFavorite(stories)
+                localDataSource.insertFavorite(DataMapper.mapStoriesToStoriesEntity(stories))
                 emit(Resources.Success(data = "Success"))
             } catch (e: Exception) {
                 emit(Resources.Error(message = e.message.toString()))
@@ -39,11 +39,11 @@ class FavoriteRepository(val localDataSource: LocalDataSource) :
         }
     }
 
-    override suspend fun deleteFavorite(stories: StoriesEntity): Flow<Resources<String>> {
+    override suspend fun deleteFavorite(stories: Stories): Flow<Resources<String>> {
         return flow {
             emit(Resources.Loading(data = null))
             try {
-                localDataSource.deleteFavorite(stories)
+                localDataSource.deleteFavorite((DataMapper.mapStoriesToStoriesEntity(stories)))
                 emit(Resources.Success(data = "Success"))
             } catch (e: Exception) {
                 emit(Resources.Error(message = e.message.toString()))
