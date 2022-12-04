@@ -51,7 +51,7 @@ class DetailActivity : AppCompatActivity() {
                                 binding.fabFavorite.setOnClickListener {
                                     isFavorite.value=false
                                     DetailViewModel.viewModelScope.launch(Dispatchers.IO){
-                                        DetailViewModel.delete(DataMapper.mapStoriesToStoriesEntity(data)).collect{
+                                        DetailViewModel.delete(data).collect{
                                             when(it){
                                                 is Resources.Success->{
                                                     DetailViewModel.viewModelScope.launch(Dispatchers.Main) {
@@ -79,7 +79,7 @@ class DetailActivity : AppCompatActivity() {
                                 binding.fabFavorite.setOnClickListener {
                                     isFavorite.value=true
                                     DetailViewModel.viewModelScope.launch(Dispatchers.IO){
-                                        DetailViewModel.addFavorite(DataMapper.mapStoriesToStoriesEntity(data)).collect{
+                                        DetailViewModel.addFavorite(data).collect{
                                             when(it){
                                                 is Resources.Success->{
                                                     DetailViewModel.viewModelScope.launch(Dispatchers.Main) {

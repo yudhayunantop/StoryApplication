@@ -2,6 +2,8 @@ package com.submission.storyapplication.core.data.local.room
 
 import androidx.room.*
 import com.submission.storyapplication.core.data.local.entity.StoriesEntity
+import com.submission.storyapplication.core.domain.model.Stories
+import com.submission.storyapplication.core.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
 
 @Dao
