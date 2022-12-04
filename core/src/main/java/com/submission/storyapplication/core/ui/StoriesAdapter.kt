@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.submission.storyapplication.core.data.local.entity.StoriesEntity
-import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 import com.submission.storyapplication.core.databinding.ItemStoryBinding
+import com.submission.storyapplication.core.domain.model.Stories
 
 class StoriesAdapter
-    : PagingDataAdapter<StoriesEntity, StoriesAdapter.ListViewHolder>(DIFF_CALLBACK) {
+    : PagingDataAdapter<Stories, StoriesAdapter.ListViewHolder>(DIFF_CALLBACK) {
     lateinit var onClickListener: OnClickListener
 
     @JvmName("setOnClickListener1")
@@ -33,7 +33,7 @@ class StoriesAdapter
         var binding: ItemStoryBinding = itemView
         var onClickListener=onClickListener
 
-        fun bind(stories: StoriesEntity) {
+        fun bind(stories: Stories) {
             Glide.with(itemView.context)
                 .load(stories.photoUrl)
                 .apply(RequestOptions().override(55, 55))
@@ -48,17 +48,17 @@ class StoriesAdapter
     }
 
     companion object {
-        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<StoriesEntity>() {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Stories>() {
             override fun areItemsTheSame(
-                oldItem: StoriesEntity,
-                newItem: StoriesEntity
+                oldItem: Stories,
+                newItem: Stories
             ): Boolean {
                 return oldItem == newItem
             }
 
             override fun areContentsTheSame(
-                oldItem: StoriesEntity,
-                newItem: StoriesEntity
+                oldItem: Stories,
+                newItem: Stories
             ): Boolean {
                 return oldItem.id == newItem.id
             }
@@ -66,6 +66,6 @@ class StoriesAdapter
     }
 
     interface OnClickListener{
-        fun onItemClick(stories: StoriesEntity)
+        fun onItemClick(stories: Stories)
     }
 }

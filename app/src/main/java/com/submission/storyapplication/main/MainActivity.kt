@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.submission.storyapplication.R
 import com.submission.storyapplication.add.AddActivity
 import com.submission.storyapplication.core.data.local.entity.StoriesEntity
-import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
+import com.submission.storyapplication.core.domain.model.Stories
 import com.submission.storyapplication.core.ui.StoriesAdapter
 import com.submission.storyapplication.databinding.ActivityMainBinding
 import com.submission.storyapplication.core.utils.Preferences
@@ -19,10 +19,7 @@ import com.submission.storyapplication.core.utils.Preferences.clearData
 import com.submission.storyapplication.detail.DetailActivity
 import com.submission.storyapplication.login.LoginActivity
 import com.submission.storyapplication.maps.MapsActivity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -63,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 //        })
 
         adapter.setOnClickListener(object : StoriesAdapter.OnClickListener{
-            override fun onItemClick(stories: StoriesEntity) {
+            override fun onItemClick(stories: Stories) {
                 val intent = Intent(this@MainActivity, DetailActivity::class.java)
                 intent.putExtra("data", stories)
                 startActivity(intent)

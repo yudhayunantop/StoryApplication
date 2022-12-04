@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.submission.storyapplication.core.data.local.entity.StoriesEntity
-import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
+import com.submission.storyapplication.core.domain.model.Stories
 import com.submission.storyapplication.core.utils.Resources
 import com.submission.storyapplication.favorit.databinding.ActivityFavoriteBinding
 import com.submission.storyapplication.favorit.di.favoriteModule
@@ -42,12 +42,12 @@ class FavoriteActivity : AppCompatActivity() {
         binding.listFavoriteStory.adapter = adapter
     }
 
-    private fun refreshDataAdapter(listStories: List<StoriesEntity>) {
+    private fun refreshDataAdapter(listStories: List<Stories>) {
         adapter.setListStories(listStories)
         adapter.notifyDataSetChanged()
 
         adapter.setOnClickListener(object : FavoriteAdapter.OnClickListener{
-            override fun onItemClick(stories: StoriesEntity) {
+            override fun onItemClick(stories: Stories) {
                 val intent = Intent(this@FavoriteActivity, DetailActivity::class.java)
                 intent.putExtra("data", stories)
                 startActivity(intent)
@@ -60,7 +60,7 @@ class FavoriteActivity : AppCompatActivity() {
             favoriteViewModel.getAllFavorite().flowOn(Dispatchers.IO).collect { resource ->
                 when (resource) {
                     is Resources.Success -> {
-                        refreshDataAdapter(resource.data as List<StoriesEntity>)
+                        refreshDataAdapter(resource.data as List<Stories>)
                     }
                     is Resources.Error -> {
                         refreshDataAdapter(listOf())

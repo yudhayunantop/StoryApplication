@@ -6,7 +6,6 @@ import android.view.Window
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -15,7 +14,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.submission.storyapplication.R
 import com.submission.storyapplication.core.data.local.entity.StoriesEntity
-import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 import com.submission.storyapplication.databinding.ActivityMapsBinding
 import com.submission.storyapplication.core.utils.Resources
 import com.submission.storyapplication.core.utils.Preferences

@@ -5,17 +5,17 @@ import androidx.paging.PagingState
 import com.submission.storyapplication.core.data.local.entity.StoriesEntity
 import com.submission.storyapplication.core.data.remote.RemoteDataSource
 import com.submission.storyapplication.core.data.remote.network.ApiResponse
-import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
-import com.submission.storyapplication.core.utils.Resources
+import com.submission.storyapplication.core.domain.model.Stories
+import com.submission.storyapplication.core.utils.DataMapper
 import com.submission.storyapplication.core.utils.Preferences
 
 class StoriesPagingSource(private val remoteDataSource: RemoteDataSource) :
-    PagingSource<Int, StoriesEntity>() {
+    PagingSource<Int, Stories>() {
     private companion object {
         const val INITIAL_PAGE_INDEX = 1
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, StoriesEntity> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Stories> {
         return try {
             val position = params.key ?: INITIAL_PAGE_INDEX
             val token = "Bearer ${Preferences.getToken()}"
@@ -23,7 +23,7 @@ class StoriesPagingSource(private val remoteDataSource: RemoteDataSource) :
 //                token,
 //                position,
 //                params.loadSize)
-            var listStory = listOf<StoriesEntity>()
+            var listStory = listOf<Stories>()
             remoteDataSource.getAllStories(
                 token,
                 position,
@@ -31,7 +31,8 @@ class StoriesPagingSource(private val remoteDataSource: RemoteDataSource) :
             ).collect { resource ->
                 when (resource) {
                     is ApiResponse.Success -> {
-                        listStory = resource.data as List<StoriesEntity>
+                        listStory = DataMapper.mapStoriesEntitytoStories(resource.data)
+//                        listStory = resource.data as List<StoriesEntity>
                     }
                     is ApiResponse.Error -> {}
                     is ApiResponse.Empty -> {}
@@ -49,7 +50,7 @@ class StoriesPagingSource(private val remoteDataSource: RemoteDataSource) :
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, StoriesEntity>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, Stories>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
             anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)

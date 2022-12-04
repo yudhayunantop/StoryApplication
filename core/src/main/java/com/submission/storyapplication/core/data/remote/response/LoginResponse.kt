@@ -1,6 +1,6 @@
 package com.submission.storyapplication.core.data.remote.response
 
-data class LoginModel(
+data class LoginResponse(
     val error: Boolean?,
     val message: String?,
     val loginResult: login?

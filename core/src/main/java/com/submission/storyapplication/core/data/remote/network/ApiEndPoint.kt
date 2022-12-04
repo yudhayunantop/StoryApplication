@@ -1,8 +1,8 @@
 package com.submission.storyapplication.core.data.remote.network
 
-import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
-import com.submission.storyapplication.core.data.remote.response.LoginModel
-import com.submission.storyapplication.core.data.remote.response.ResponseModel
+import com.submission.storyapplication.core.data.remote.response.AllStoriesResponse
+import com.submission.storyapplication.core.data.remote.response.LoginResponse
+import com.submission.storyapplication.core.data.remote.response.Response
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -14,14 +14,14 @@ interface ApiEndPoint {
         @Field("name") name: String,
         @Field("email") email: String,
         @Field("password") password: String,
-    ) : ResponseModel
+    ) : Response
 
     @FormUrlEncoded
     @POST("login")
     suspend fun login(
         @Field("email") email: String,
         @Field("password") password: String,
-    ) : LoginModel
+    ) : LoginResponse
 
     @Multipart
     @POST("stories")
@@ -29,17 +29,17 @@ interface ApiEndPoint {
         @Header("Authorization") token:String,
         @Part("description") description: RequestBody,
         @Part photo: MultipartBody.Part
-    ) : ResponseModel
+    ) : Response
 
     @GET("stories")
     suspend fun get_all_stories(
     @Header("Authorization") token:String,
     @Query("page") page: Int,
     @Query("size") size: Int
-    ) : AllStoriesModel
+    ) : AllStoriesResponse
 
     @GET("stories?location=1")
     suspend fun get_all_stories_location(
         @Header("Authorization") token:String
-    ) : AllStoriesModel
+    ) : AllStoriesResponse
 }

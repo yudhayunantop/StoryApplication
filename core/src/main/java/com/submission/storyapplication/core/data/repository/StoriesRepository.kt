@@ -8,11 +8,11 @@ import com.submission.storyapplication.core.data.local.entity.StoriesEntity
 import com.submission.storyapplication.core.data.local.room.StoriesDatabase
 import com.submission.storyapplication.core.data.remote.RemoteDataSource
 import com.submission.storyapplication.core.data.remote.network.ApiResponse
-import com.submission.storyapplication.core.data.remote.response.ResponseModel
+import com.submission.storyapplication.core.data.remote.response.Response
+import com.submission.storyapplication.core.domain.model.Stories
 import com.submission.storyapplication.core.domain.repoInterface.IAllStoriesRepository
 import com.submission.storyapplication.core.utils.Resources
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -24,7 +24,7 @@ class StoriesRepository(
     override fun getPagingSource() =
         StoriesPagingSource(remoteDataSource)
 
-    override fun getPagingSourceFlow(): Flow<PagingData<StoriesEntity>> {
+    override fun getPagingSourceFlow(): Flow<PagingData<Stories>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 5
@@ -40,7 +40,7 @@ class StoriesRepository(
         description: RequestBody,
         photo: MultipartBody.Part
     )
-    : Flow<Resources<ResponseModel>>  {
+    : Flow<Resources<Response>>  {
       return flow {
           remoteDataSource.add_story(
               token,

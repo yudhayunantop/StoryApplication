@@ -1,9 +1,8 @@
 package com.submission.storyapplication.core.domain.interactor
 
-import com.submission.storyapplication.core.data.remote.network.ApiResponse
 import com.submission.storyapplication.core.domain.repoInterface.IAllStoriesRepository
 import com.submission.storyapplication.core.domain.useCase.AddStoriesUseCase
-import com.submission.storyapplication.core.data.remote.response.ResponseModel
+import com.submission.storyapplication.core.data.remote.response.Response
 import com.submission.storyapplication.core.utils.Resources
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
@@ -15,7 +14,7 @@ class AddStoriesInteractor (val repository: IAllStoriesRepository):
         token: String,
         description: RequestBody,
         photo: MultipartBody.Part
-    ): Flow<Resources<ResponseModel>> {
+    ): Flow<Resources<Response>> {
         return repository.addStories(token,description, photo)
     }
 }

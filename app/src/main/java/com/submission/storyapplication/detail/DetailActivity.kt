@@ -10,7 +10,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.submission.storyapplication.R
 import com.submission.storyapplication.core.data.local.entity.StoriesEntity
-import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
+import com.submission.storyapplication.core.domain.model.Stories
+import com.submission.storyapplication.core.utils.DataMapper
 import com.submission.storyapplication.core.utils.Resources
 import com.submission.storyapplication.databinding.ActivityDetailBinding
 import com.submission.storyapplication.main.MainActivity
@@ -32,7 +33,7 @@ class DetailActivity : AppCompatActivity() {
         statusObserver()
 
 //        tinggal masukkan data ke activity
-        val data: StoriesEntity = intent.getSerializableExtra("data") as StoriesEntity
+        val data: Stories = intent.getSerializableExtra("data") as Stories
         Glide.with(this)
             .load(data.photoUrl)
             .apply(RequestOptions().override(55, 55))
@@ -50,7 +51,7 @@ class DetailActivity : AppCompatActivity() {
                                 binding.fabFavorite.setOnClickListener {
                                     isFavorite.value=false
                                     DetailViewModel.viewModelScope.launch(Dispatchers.IO){
-                                        DetailViewModel.delete(data).collect{
+                                        DetailViewModel.delete(DataMapper.mapStoriesToStoriesEntity(data)).collect{
                                             when(it){
                                                 is Resources.Success->{
                                                     DetailViewModel.viewModelScope.launch(Dispatchers.Main) {
@@ -78,7 +79,7 @@ class DetailActivity : AppCompatActivity() {
                                 binding.fabFavorite.setOnClickListener {
                                     isFavorite.value=true
                                     DetailViewModel.viewModelScope.launch(Dispatchers.IO){
-                                        DetailViewModel.addFavorite(data).collect{
+                                        DetailViewModel.addFavorite(DataMapper.mapStoriesToStoriesEntity(data)).collect{
                                             when(it){
                                                 is Resources.Success->{
                                                     DetailViewModel.viewModelScope.launch(Dispatchers.Main) {

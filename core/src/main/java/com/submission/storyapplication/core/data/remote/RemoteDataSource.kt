@@ -3,16 +3,15 @@ package com.submission.storyapplication.core.data.remote
 import com.submission.storyapplication.core.data.local.entity.StoriesEntity
 import com.submission.storyapplication.core.data.remote.network.ApiEndPoint
 import com.submission.storyapplication.core.data.remote.network.ApiResponse
-import com.submission.storyapplication.core.data.remote.response.LoginModel
-import com.submission.storyapplication.core.data.remote.response.ResponseModel
-import com.submission.storyapplication.core.utils.Resources
+import com.submission.storyapplication.core.data.remote.response.LoginResponse
+import com.submission.storyapplication.core.data.remote.response.Response
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 class RemoteDataSource(private val apiEndPoint: ApiEndPoint) {
-    suspend fun login(email:String, password:String): Flow<ApiResponse<LoginModel.login>>{
+    suspend fun login(email:String, password:String): Flow<ApiResponse<LoginResponse.login>>{
         return flow {
             try {
                 val responseLogin=apiEndPoint.login(email, password)
@@ -30,7 +29,7 @@ class RemoteDataSource(private val apiEndPoint: ApiEndPoint) {
             }
         }
     }
-    suspend fun register(name:String, email:String, password: String): Flow<ApiResponse<ResponseModel>>{
+    suspend fun register(name:String, email:String, password: String): Flow<ApiResponse<Response>>{
         return flow{
             try {
                 val responseRegister=apiEndPoint.register(name=name, email=email, password=password)
@@ -44,7 +43,7 @@ class RemoteDataSource(private val apiEndPoint: ApiEndPoint) {
             }
         }
     }
-    suspend fun add_story(token: String, description: RequestBody, photo: MultipartBody.Part): Flow<ApiResponse<ResponseModel>>{
+    suspend fun add_story(token: String, description: RequestBody, photo: MultipartBody.Part): Flow<ApiResponse<Response>>{
         return flow{
             try {
                 val responseAddStory=apiEndPoint.add_story(token=token, description=description, photo=photo)

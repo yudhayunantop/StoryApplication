@@ -3,7 +3,6 @@ package com.submission.storyapplication.core.data.local.room
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.submission.storyapplication.core.data.local.entity.StoriesEntity
-import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 
 @Database(
     entities = [StoriesEntity::class],

@@ -1,7 +1,6 @@
 package com.submission.storyapplication.core.domain.useCase
 
 import com.submission.storyapplication.core.data.local.entity.StoriesEntity
-import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 import com.submission.storyapplication.core.utils.Resources
 import kotlinx.coroutines.flow.Flow
 

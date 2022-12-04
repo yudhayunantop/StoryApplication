@@ -1,7 +1,7 @@
 package com.submission.storyapplication.core.domain.interactor
 
 import com.submission.storyapplication.core.data.local.entity.StoriesEntity
-import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
+import com.submission.storyapplication.core.domain.model.Stories
 import com.submission.storyapplication.core.domain.repoInterface.IFavoriteRepository
 import com.submission.storyapplication.core.domain.useCase.FavoriteUseCase
 import com.submission.storyapplication.core.utils.Resources
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 class FavoriteInteractor (val favoriteRepository: IFavoriteRepository):
     FavoriteUseCase {
-    override fun getAllStoriesFavorite(): Flow<Resources<List<StoriesEntity>>> {
+    override fun getAllStoriesFavorite(): Flow<Resources<List<Stories>>> {
         return favoriteRepository.getAllStoriesFavorite()
     }
     override suspend fun insertFavorite(stories: StoriesEntity):Flow<Resources<String>>{

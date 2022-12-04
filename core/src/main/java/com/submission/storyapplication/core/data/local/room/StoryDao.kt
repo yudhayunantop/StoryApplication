@@ -2,7 +2,6 @@ package com.submission.storyapplication.core.data.local.room
 
 import androidx.room.*
 import com.submission.storyapplication.core.data.local.entity.StoriesEntity
-import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -2,7 +2,6 @@ package com.submission.storyapplication.core.data.local
 
 import com.submission.storyapplication.core.data.local.entity.StoriesEntity
 import com.submission.storyapplication.core.data.local.room.StoryDao
-import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 
 class LocalDataSource(private val storyDao: StoryDao) {
     fun getAllStoriesFavorite() = storyDao.getAllStoriesFavorite()
