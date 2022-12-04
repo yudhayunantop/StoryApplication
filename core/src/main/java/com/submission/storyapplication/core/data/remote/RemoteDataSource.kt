@@ -1,7 +1,8 @@
 package com.submission.storyapplication.core.data.remote
 
 import com.submission.storyapplication.core.data.local.entity.StoriesEntity
-import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
+import com.submission.storyapplication.core.data.remote.network.ApiEndPoint
+import com.submission.storyapplication.core.data.remote.network.ApiResponse
 import com.submission.storyapplication.core.data.remote.response.LoginModel
 import com.submission.storyapplication.core.data.remote.response.ResponseModel
 import com.submission.storyapplication.core.utils.Resources
@@ -11,81 +12,87 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 class RemoteDataSource(private val apiEndPoint: ApiEndPoint) {
-    suspend fun login(email:String, password:String): Flow<Resources<LoginModel.login>>{
+    suspend fun login(email:String, password:String): Flow<ApiResponse<LoginModel.login>>{
         return flow {
-            emit(Resources.Loading(data = null))
             try {
                 val responseLogin=apiEndPoint.login(email, password)
                 if (responseLogin.error == false){
-                    emit(Resources.Success(data=responseLogin.loginResult as LoginModel.login))
+                    if (responseLogin.loginResult == null){
+                        emit(ApiResponse.Empty)
+                    }else{
+                        emit(ApiResponse.Success(data=responseLogin.loginResult))
+                    }
                 }else if (responseLogin.error==true){
-                    emit(Resources.Error(data=null, message = responseLogin.message.toString()))
+                    emit(ApiResponse.Error(errorMessage= responseLogin.message.toString()))
                 }
             }catch (E:Exception){
-                emit(Resources.Error(message = E.message.toString()))
+                emit(ApiResponse.Error(errorMessage= E.message.toString()))
             }
         }
     }
-    suspend fun register(name:String, email:String, password: String): Flow<Resources<ResponseModel>>{
+    suspend fun register(name:String, email:String, password: String): Flow<ApiResponse<ResponseModel>>{
         return flow{
-            emit(Resources.Loading(data = null))
             try {
                 val responseRegister=apiEndPoint.register(name=name, email=email, password=password)
                 if (responseRegister.error == false){
-                    emit(Resources.Success(data=responseRegister))
+                    emit(ApiResponse.Success(data=responseRegister))
                 }else if (responseRegister.error==true){
-                    emit(Resources.Error(data=null, message = responseRegister.message.toString()))
+                    emit(ApiResponse.Error(errorMessage= responseRegister.message.toString()))
                 }
             }catch (E:Exception){
-                emit(Resources.Error(message = E.message.toString()))
+                emit(ApiResponse.Error(errorMessage= E.message.toString()))
             }
         }
     }
-    suspend fun add_story(token: String, description: RequestBody, photo: MultipartBody.Part): Flow<Resources<ResponseModel>>{
+    suspend fun add_story(token: String, description: RequestBody, photo: MultipartBody.Part): Flow<ApiResponse<ResponseModel>>{
         return flow{
-            emit(Resources.Loading(data = null))
             try {
                 val responseAddStory=apiEndPoint.add_story(token=token, description=description, photo=photo)
                 if (responseAddStory.error == false){
-                    emit(Resources.Success(data=responseAddStory))
+                    emit(ApiResponse.Success(data=responseAddStory))
                 }else if (responseAddStory.error==true){
-                    emit(Resources.Error(data=null, message = responseAddStory.message.toString()))
+                    emit(ApiResponse.Error(errorMessage= responseAddStory.message.toString()))
                 }
             }catch (E:Exception){
-                emit(Resources.Error(message = E.message.toString()))
+                emit(ApiResponse.Error(errorMessage= E.message.toString()))
             }
         }
     }
-    suspend fun get_all_stories(token: String, position: Int, loadSize: Int) =apiEndPoint.get_all_stories(token, position, loadSize)
 
-    suspend fun getAllStories(token: String, position: Int, loadSize: Int) : Flow<Resources<List<StoriesEntity>>> {
+    suspend fun getAllStories(token: String, position: Int, loadSize: Int) : Flow<ApiResponse<List<StoriesEntity>>> {
         return flow {
-            emit(Resources.Loading(data = null))
             try {
                 val responseAllStories =  apiEndPoint.get_all_stories(token = token, page = position, size = loadSize)
                 if (responseAllStories.error == false) {
-                    emit(Resources.Success(data = responseAllStories.listStory as List<StoriesEntity>))
+                    if (responseAllStories.listStory.isNullOrEmpty()){
+                        emit(ApiResponse.Empty)
+                    }else{
+                        emit(ApiResponse.Success(data = responseAllStories.listStory as List<StoriesEntity>))
+                    }
                 } else {
-                    emit(Resources.Error(message = responseAllStories.message.toString()))
+                    emit(ApiResponse.Error(errorMessage= responseAllStories.message.toString()))
                 }
             } catch (e: Exception) {
-                emit(Resources.Error(message = e.message.toString()))
+                emit(ApiResponse.Error(errorMessage= e.message.toString()))
             }
         }
     }
 
-    suspend fun get_all_stories_location(token: String): Flow<Resources<List<StoriesEntity>>>{
+    suspend fun get_all_stories_location(token: String): Flow<ApiResponse<List<StoriesEntity>>>{
         return flow{
-            emit(Resources.Loading(data = null))
             try {
                 val responseAllStoriesLocation=apiEndPoint.get_all_stories_location(token)
                 if (responseAllStoriesLocation.error == false){
-                    emit(Resources.Success(data=responseAllStoriesLocation.listStory as List<StoriesEntity>))
+                    if (responseAllStoriesLocation.listStory.isNullOrEmpty()){
+                        emit(ApiResponse.Empty)
+                    }else {
+                        emit(ApiResponse.Success(data = responseAllStoriesLocation.listStory as List<StoriesEntity>))
+                    }
                 }else if (responseAllStoriesLocation.error==true){
-                    emit(Resources.Error(data=null, message = responseAllStoriesLocation.message.toString()))
+                    emit(ApiResponse.Error(errorMessage= responseAllStoriesLocation.message.toString()))
                 }
             }catch (E:Exception){
-                emit(Resources.Error(message = E.message.toString()))
+                emit(ApiResponse.Error(errorMessage= E.message.toString()))
             }
         }
     }

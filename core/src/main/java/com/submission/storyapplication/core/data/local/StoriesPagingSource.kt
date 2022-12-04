@@ -4,6 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.submission.storyapplication.core.data.local.entity.StoriesEntity
 import com.submission.storyapplication.core.data.remote.RemoteDataSource
+import com.submission.storyapplication.core.data.remote.network.ApiResponse
 import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 import com.submission.storyapplication.core.utils.Resources
 import com.submission.storyapplication.core.utils.Preferences
@@ -29,11 +30,11 @@ class StoriesPagingSource(private val remoteDataSource: RemoteDataSource) :
                 params.loadSize
             ).collect { resource ->
                 when (resource) {
-                    is Resources.Success -> {
+                    is ApiResponse.Success -> {
                         listStory = resource.data as List<StoriesEntity>
                     }
-                    is Resources.Error -> {}
-                    is Resources.Loading -> {}
+                    is ApiResponse.Error -> {}
+                    is ApiResponse.Empty -> {}
                 }
 
             }

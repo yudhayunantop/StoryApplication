@@ -3,7 +3,7 @@ package com.submission.storyapplication.core.di
 import androidx.room.Room
 import com.submission.storyapplication.core.data.local.LocalDataSource
 import com.submission.storyapplication.core.data.local.room.StoriesDatabase
-import com.submission.storyapplication.core.data.remote.ApiEndPoint
+import com.submission.storyapplication.core.data.remote.network.ApiEndPoint
 import com.submission.storyapplication.core.data.remote.RemoteDataSource
 import com.submission.storyapplication.core.data.repository.*
 import com.submission.storyapplication.core.domain.repoInterface.*

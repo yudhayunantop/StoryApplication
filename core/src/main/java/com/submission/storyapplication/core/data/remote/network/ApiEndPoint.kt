@@ -1,4 +1,4 @@
-package com.submission.storyapplication.core.data.remote
+package com.submission.storyapplication.core.data.remote.network
 
 import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 import com.submission.storyapplication.core.data.remote.response.LoginModel

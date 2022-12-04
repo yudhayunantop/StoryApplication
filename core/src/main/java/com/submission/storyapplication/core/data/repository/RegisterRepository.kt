@@ -1,6 +1,5 @@
 package com.submission.storyapplication.core.data.repository
 
-import com.submission.storyapplication.core.data.remote.ApiEndPoint
 import com.submission.storyapplication.core.data.remote.RemoteDataSource
 import com.submission.storyapplication.core.domain.repoInterface.IRegisterRepository
 
