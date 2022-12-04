@@ -35,20 +35,20 @@
             android:value="AIzaSyA_6FtzibanBayLZE6cFaqFZVRYJWSJhbM" />
 
         <activity
-            android:name=".ui.activity.MapsActivity"
+            android:name=".maps.MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name=".ui.activity.RegisterActivity"
+            android:name=".register.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.DetailActivity"
+            android:name=".detail.DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.AddActivity"
+            android:name=".add.AddActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name=".login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -57,7 +57,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name=".main.MainActivity"
             android:exported="false" />
 
         <provider

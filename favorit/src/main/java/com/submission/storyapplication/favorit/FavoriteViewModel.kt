@@ -1,4 +1,4 @@
-package com.submission.storyapplication.favorit.ui.viewModel
+package com.submission.storyapplication.favorit
 
 import androidx.lifecycle.ViewModel
 import com.submission.storyapplication.core.data.remote.response.AllStoriesModel

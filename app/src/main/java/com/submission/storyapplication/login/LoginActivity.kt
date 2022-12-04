@@ -1,4 +1,4 @@
-package com.submission.storyapplication.ui.activity
+package com.submission.storyapplication.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -17,7 +17,8 @@ import com.submission.storyapplication.core.utils.Preferences.preferences
 import com.submission.storyapplication.core.utils.Preferences.saveName
 import com.submission.storyapplication.core.utils.Preferences.saveToken
 import com.submission.storyapplication.core.utils.Preferences.saveUserId
-import com.submission.storyapplication.ui.viewModel.LoginViewModel
+import com.submission.storyapplication.main.MainActivity
+import com.submission.storyapplication.register.RegisterActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch

@@ -1,5 +1,6 @@
 package com.submission.storyapplication.core.data.remote
 
+import com.submission.storyapplication.core.data.local.entity.StoriesEntity
 import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 import com.submission.storyapplication.core.data.remote.response.LoginModel
 import com.submission.storyapplication.core.data.remote.response.ResponseModel
@@ -57,13 +58,13 @@ class RemoteDataSource(private val apiEndPoint: ApiEndPoint) {
     }
     suspend fun get_all_stories(token: String, position: Int, loadSize: Int) =apiEndPoint.get_all_stories(token, position, loadSize)
 
-    suspend fun getAllStories(token: String, position: Int, loadSize: Int) : Flow<Resources<List<AllStoriesModel.stories>>> {
+    suspend fun getAllStories(token: String, position: Int, loadSize: Int) : Flow<Resources<List<StoriesEntity>>> {
         return flow {
             emit(Resources.Loading(data = null))
             try {
                 val responseAllStories =  apiEndPoint.get_all_stories(token = token, page = position, size = loadSize)
                 if (responseAllStories.error == false) {
-                    emit(Resources.Success(data = responseAllStories.listStory as List<AllStoriesModel.stories>))
+                    emit(Resources.Success(data = responseAllStories.listStory as List<StoriesEntity>))
                 } else {
                     emit(Resources.Error(message = responseAllStories.message.toString()))
                 }
@@ -73,13 +74,13 @@ class RemoteDataSource(private val apiEndPoint: ApiEndPoint) {
         }
     }
 
-    suspend fun get_all_stories_location(token: String): Flow<Resources<List<AllStoriesModel.stories>>>{
+    suspend fun get_all_stories_location(token: String): Flow<Resources<List<StoriesEntity>>>{
         return flow{
             emit(Resources.Loading(data = null))
             try {
                 val responseAllStoriesLocation=apiEndPoint.get_all_stories_location(token)
                 if (responseAllStoriesLocation.error == false){
-                    emit(Resources.Success(data=responseAllStoriesLocation.listStory as List<AllStoriesModel.stories>))
+                    emit(Resources.Success(data=responseAllStoriesLocation.listStory as List<StoriesEntity>))
                 }else if (responseAllStoriesLocation.error==true){
                     emit(Resources.Error(data=null, message = responseAllStoriesLocation.message.toString()))
                 }

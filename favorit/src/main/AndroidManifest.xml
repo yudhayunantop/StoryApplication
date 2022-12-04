@@ -14,7 +14,7 @@
 
     <application>
         <activity
-            android:name=".ui.activity.FavoriteActivity"
+            android:name=".FavoriteActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

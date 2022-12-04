@@ -1,4 +1,4 @@
-package com.submission.storyapplication.ui.activity
+package com.submission.storyapplication.register
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,7 +11,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.submission.storyapplication.databinding.ActivityRegisterBinding
 import com.submission.storyapplication.core.utils.Resources
-import com.submission.storyapplication.ui.viewModel.RegisterViewModel
+import com.submission.storyapplication.login.LoginActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch

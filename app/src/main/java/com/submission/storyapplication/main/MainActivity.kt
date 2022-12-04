@@ -1,21 +1,23 @@
-package com.submission.storyapplication.ui.activity
+package com.submission.storyapplication.main
 
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityOptionsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.submission.storyapplication.MainViewModel
 import com.submission.storyapplication.R
+import com.submission.storyapplication.add.AddActivity
+import com.submission.storyapplication.core.data.local.entity.StoriesEntity
 import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 import com.submission.storyapplication.core.ui.StoriesAdapter
 import com.submission.storyapplication.databinding.ActivityMainBinding
 import com.submission.storyapplication.core.utils.Preferences
 import com.submission.storyapplication.core.utils.Preferences.clearData
+import com.submission.storyapplication.detail.DetailActivity
+import com.submission.storyapplication.login.LoginActivity
+import com.submission.storyapplication.maps.MapsActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -49,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         adapter.setOnClickListener(object : StoriesAdapter.OnClickListener{
-            override fun onItemClick(stories: AllStoriesModel.stories) {
+            override fun onItemClick(stories: StoriesEntity) {
                 val intent = Intent(this@MainActivity, DetailActivity::class.java)
                 intent.putExtra("data", stories)
                 startActivity(intent)

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.LoginActivity">
+    tools:context=".login.LoginActivity">
     <TextView
         android:id="@+id/textViewDicoding"
         android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewDicoding" />
 
-    <com.submission.storyapplication.ui.assets.MyEmail
+    <com.submission.storyapplication.assets.MyEmail
         android:id="@+id/ed_login_email"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_login" />
 
-    <com.submission.storyapplication.ui.assets.MyPassword
+    <com.submission.storyapplication.assets.MyPassword
         android:id="@+id/ed_login_password"
         android:layout_width="250dp"
         android:layout_height="wrap_content"

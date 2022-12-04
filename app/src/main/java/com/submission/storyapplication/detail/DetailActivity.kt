@@ -1,8 +1,7 @@
-package com.submission.storyapplication.ui.activity
+package com.submission.storyapplication.detail
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
@@ -10,10 +9,11 @@ import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.submission.storyapplication.R
+import com.submission.storyapplication.core.data.local.entity.StoriesEntity
 import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 import com.submission.storyapplication.core.utils.Resources
 import com.submission.storyapplication.databinding.ActivityDetailBinding
-import com.submission.storyapplication.ui.viewModel.DetailViewModel
+import com.submission.storyapplication.main.MainActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -28,11 +28,11 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        getSupportActionBar()!!.setTitle("Detail Story");
+        getSupportActionBar()!!.setTitle("Detail Story")
         statusObserver()
 
 //        tinggal masukkan data ke activity
-        val data: AllStoriesModel.stories = intent.getSerializableExtra("data") as AllStoriesModel.stories
+        val data: StoriesEntity = intent.getSerializableExtra("data") as StoriesEntity
         Glide.with(this)
             .load(data.photoUrl)
             .apply(RequestOptions().override(55, 55))

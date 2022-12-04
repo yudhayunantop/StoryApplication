@@ -1,7 +1,7 @@
 package com.submission.storyapplication.core.data.repository
 
-import com.submission.storyapplication.core.data.local.database.StoriesDatabase
-import com.submission.storyapplication.core.data.local.database.StoriesPagingSource
+import com.submission.storyapplication.core.data.local.room.StoriesDatabase
+import com.submission.storyapplication.core.data.local.StoriesPagingSource
 import com.submission.storyapplication.core.data.remote.RemoteDataSource
 import com.submission.storyapplication.core.data.remote.response.ResponseModel
 import com.submission.storyapplication.core.domain.repoInterface.IAllStoriesRepository

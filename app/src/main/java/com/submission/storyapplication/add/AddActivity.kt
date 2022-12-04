@@ -1,4 +1,4 @@
-package com.submission.storyapplication.ui.activity
+package com.submission.storyapplication.add
 
 import android.Manifest
 import android.content.Intent
@@ -22,7 +22,7 @@ import com.submission.storyapplication.core.utils.createCustomTempFile
 import com.submission.storyapplication.core.utils.rotateBitmap
 import com.submission.storyapplication.core.utils.uriToFile
 import com.submission.storyapplication.core.utils.Preferences
-import com.submission.storyapplication.ui.viewModel.AddStoriesViewModel
+import com.submission.storyapplication.main.MainActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch

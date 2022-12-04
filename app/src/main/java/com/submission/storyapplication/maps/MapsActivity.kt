@@ -1,4 +1,4 @@
-package com.submission.storyapplication.ui.activity
+package com.submission.storyapplication.maps
 
 import android.os.Bundle
 import android.util.Log
@@ -14,11 +14,11 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.submission.storyapplication.R
+import com.submission.storyapplication.core.data.local.entity.StoriesEntity
 import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 import com.submission.storyapplication.databinding.ActivityMapsBinding
 import com.submission.storyapplication.core.utils.Resources
 import com.submission.storyapplication.core.utils.Preferences
-import com.submission.storyapplication.ui.viewModel.MapsViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
@@ -29,7 +29,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
     private val MapsViewModel: MapsViewModel by viewModel()
-    private var itemMutableList: MutableLiveData<List<AllStoriesModel.stories>?> = MutableLiveData()
+    private var itemMutableList: MutableLiveData<List<StoriesEntity>?> = MutableLiveData()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +65,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.uiSettings.isCompassEnabled = true
         mMap.uiSettings.isMapToolbarEnabled = true
 
-       itemMutableList.observe(this, Observer {
+       itemMutableList.observe(this, {
            if (it != null) {
                it.forEach {
                    var location = LatLng(it.lat!!.toDouble(), it.lon!!.toDouble())
@@ -88,7 +88,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             ).collect { result ->
                 when (result) {
                     is Resources.Success -> {
-                        itemMutableList.value= result.data!!
+                        itemMutableList.value= result.data
                     }
                     is Resources.Error -> {
                         Toast.makeText(applicationContext, result.message, Toast.LENGTH_SHORT)

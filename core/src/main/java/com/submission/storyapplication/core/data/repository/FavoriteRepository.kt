@@ -1,6 +1,7 @@
 package com.submission.storyapplication.core.data.repository
 
 import com.submission.storyapplication.core.data.local.LocalDataSource
+import com.submission.storyapplication.core.data.local.entity.StoriesEntity
 import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 import com.submission.storyapplication.core.domain.repoInterface.IFavoriteRepository
 import com.submission.storyapplication.core.utils.Resources
@@ -9,7 +10,7 @@ import kotlinx.coroutines.flow.flow
 
 class FavoriteRepository(val localDataSource: LocalDataSource) :
     IFavoriteRepository {
-    override fun getAllStoriesFavorite(): Flow<Resources<List<AllStoriesModel.stories>>> {
+    override fun getAllStoriesFavorite(): Flow<Resources<List<StoriesEntity>>> {
         return flow {
             emit(Resources.Loading(data = null))
             try {
@@ -25,7 +26,7 @@ class FavoriteRepository(val localDataSource: LocalDataSource) :
         }
     }
 
-    override suspend fun insertFavorite(stories: AllStoriesModel.stories): Flow<Resources<String>> {
+    override suspend fun insertFavorite(stories: StoriesEntity): Flow<Resources<String>> {
         return flow {
             emit(Resources.Loading(data = null))
             try {
@@ -37,7 +38,7 @@ class FavoriteRepository(val localDataSource: LocalDataSource) :
         }
     }
 
-    override suspend fun deleteFavorite(stories: AllStoriesModel.stories): Flow<Resources<String>> {
+    override suspend fun deleteFavorite(stories: StoriesEntity): Flow<Resources<String>> {
         return flow {
             emit(Resources.Loading(data = null))
             try {

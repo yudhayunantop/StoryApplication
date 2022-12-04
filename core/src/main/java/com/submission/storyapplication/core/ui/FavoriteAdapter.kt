@@ -5,15 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.submission.storyapplication.core.data.local.entity.StoriesEntity
 import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 import com.submission.storyapplication.core.databinding.ItemStoryBinding
 
 class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
-    var listStories = listOf<AllStoriesModel.stories>()
+    var listStories = listOf<StoriesEntity>()
     lateinit var onClickListener : OnClickListener
 
     @JvmName("setListStories1")
-    fun setListStories(list: List<AllStoriesModel.stories>) {
+    fun setListStories(list: List<StoriesEntity>) {
         this.listStories = list
     }
 
@@ -51,6 +52,6 @@ class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
     override fun getItemCount(): Int = listStories.size
 
     interface OnClickListener{
-        fun onItemClick(stories: AllStoriesModel.stories)
+        fun onItemClick(stories: StoriesEntity)
     }
 }

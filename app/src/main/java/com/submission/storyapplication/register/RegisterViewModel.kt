@@ -1,4 +1,4 @@
-package com.submission.storyapplication.ui.viewModel
+package com.submission.storyapplication.register
 
 import androidx.lifecycle.ViewModel
 import com.submission.storyapplication.core.domain.useCase.RegisterUseCase

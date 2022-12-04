@@ -1,9 +1,13 @@
 package com.submission.storyapplication.di
 
-import com.submission.storyapplication.MainViewModel
+import com.submission.storyapplication.main.MainViewModel
+import com.submission.storyapplication.add.AddStoriesViewModel
 import com.submission.storyapplication.core.domain.interactor.*
 import com.submission.storyapplication.core.domain.useCase.*
-import com.submission.storyapplication.ui.viewModel.*
+import com.submission.storyapplication.detail.DetailViewModel
+import com.submission.storyapplication.login.LoginViewModel
+import com.submission.storyapplication.maps.MapsViewModel
+import com.submission.storyapplication.register.RegisterViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

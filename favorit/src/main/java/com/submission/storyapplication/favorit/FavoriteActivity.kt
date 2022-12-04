@@ -1,18 +1,17 @@
-package com.submission.storyapplication.favorit.ui.activity
+package com.submission.storyapplication.favorit
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.submission.storyapplication.core.data.local.entity.StoriesEntity
 import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 import com.submission.storyapplication.core.utils.Resources
 import com.submission.storyapplication.favorit.databinding.ActivityFavoriteBinding
 import com.submission.storyapplication.favorit.di.favoriteModule
 import com.submission.storyapplication.core.ui.FavoriteAdapter
-import com.submission.storyapplication.core.ui.StoriesAdapter
-import com.submission.storyapplication.favorit.ui.viewModel.FavoriteViewModel
-import com.submission.storyapplication.ui.activity.DetailActivity
+import com.submission.storyapplication.detail.DetailActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
@@ -43,12 +42,12 @@ class FavoriteActivity : AppCompatActivity() {
         binding.listFavoriteStory.adapter = adapter
     }
 
-    private fun refreshDataAdapter(listStories: List<AllStoriesModel.stories>) {
+    private fun refreshDataAdapter(listStories: List<StoriesEntity>) {
         adapter.setListStories(listStories)
         adapter.notifyDataSetChanged()
 
         adapter.setOnClickListener(object : FavoriteAdapter.OnClickListener{
-            override fun onItemClick(stories: AllStoriesModel.stories) {
+            override fun onItemClick(stories: StoriesEntity) {
                 val intent = Intent(this@FavoriteActivity, DetailActivity::class.java)
                 intent.putExtra("data", stories)
                 startActivity(intent)
@@ -61,7 +60,7 @@ class FavoriteActivity : AppCompatActivity() {
             favoriteViewModel.getAllFavorite().flowOn(Dispatchers.IO).collect { resource ->
                 when (resource) {
                     is Resources.Success -> {
-                        refreshDataAdapter(resource.data as List<AllStoriesModel.stories>)
+                        refreshDataAdapter(resource.data as List<StoriesEntity>)
                     }
                     is Resources.Error -> {
                         refreshDataAdapter(listOf())

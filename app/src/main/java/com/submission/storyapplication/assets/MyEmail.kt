@@ -1,4 +1,4 @@
-package com.submission.storyapplication.ui.assets
+package com.submission.storyapplication.assets
 
 import android.content.Context
 import android.graphics.drawable.Drawable

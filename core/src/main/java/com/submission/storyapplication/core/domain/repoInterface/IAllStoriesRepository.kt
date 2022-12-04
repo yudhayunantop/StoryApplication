@@ -1,6 +1,6 @@
 package com.submission.storyapplication.core.domain.repoInterface
 
-import com.submission.storyapplication.core.data.local.database.StoriesPagingSource
+import com.submission.storyapplication.core.data.local.StoriesPagingSource
 import com.submission.storyapplication.core.data.remote.response.ResponseModel
 import com.submission.storyapplication.core.utils.Resources
 import kotlinx.coroutines.flow.Flow
