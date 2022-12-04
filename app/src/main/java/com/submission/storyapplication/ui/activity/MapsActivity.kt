@@ -17,7 +17,7 @@ import com.submission.storyapplication.R
 import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 import com.submission.storyapplication.databinding.ActivityMapsBinding
 import com.submission.storyapplication.core.utils.Resources
-import com.submission.storyapplication.core.utils.preferences.Preferences
+import com.submission.storyapplication.core.utils.Preferences
 import com.submission.storyapplication.ui.viewModel.MapsViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn

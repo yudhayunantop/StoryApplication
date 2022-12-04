@@ -5,7 +5,7 @@ import androidx.paging.PagingState
 import com.submission.storyapplication.core.data.remote.RemoteDataSource
 import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 import com.submission.storyapplication.core.utils.Resources
-import com.submission.storyapplication.core.utils.preferences.Preferences
+import com.submission.storyapplication.core.utils.Preferences
 
 class StoriesPagingSource(private val remoteDataSource: RemoteDataSource) :
     PagingSource<Int, AllStoriesModel.stories>() {

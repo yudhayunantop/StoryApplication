@@ -1,7 +1,7 @@
 package com.submission.storyapplication.favorit.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,8 +9,10 @@ import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 import com.submission.storyapplication.core.utils.Resources
 import com.submission.storyapplication.favorit.databinding.ActivityFavoriteBinding
 import com.submission.storyapplication.favorit.di.favoriteModule
-import com.submission.storyapplication.favorit.ui.adapter.FavoriteAdapter
+import com.submission.storyapplication.core.ui.FavoriteAdapter
+import com.submission.storyapplication.core.ui.StoriesAdapter
 import com.submission.storyapplication.favorit.ui.viewModel.FavoriteViewModel
+import com.submission.storyapplication.ui.activity.DetailActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
@@ -44,6 +46,14 @@ class FavoriteActivity : AppCompatActivity() {
     private fun refreshDataAdapter(listStories: List<AllStoriesModel.stories>) {
         adapter.setListStories(listStories)
         adapter.notifyDataSetChanged()
+
+        adapter.setOnClickListener(object : FavoriteAdapter.OnClickListener{
+            override fun onItemClick(stories: AllStoriesModel.stories) {
+                val intent = Intent(this@FavoriteActivity, DetailActivity::class.java)
+                intent.putExtra("data", stories)
+                startActivity(intent)
+            }
+        })
     }
 
     private fun getAllStoriesFavorite() {

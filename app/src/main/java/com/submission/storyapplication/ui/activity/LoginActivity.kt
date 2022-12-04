@@ -12,11 +12,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.submission.storyapplication.databinding.ActivityLoginBinding
 import com.submission.storyapplication.core.utils.Resources
-import com.submission.storyapplication.core.utils.preferences.Preferences
-import com.submission.storyapplication.core.utils.preferences.Preferences.preferences
-import com.submission.storyapplication.core.utils.preferences.Preferences.saveName
-import com.submission.storyapplication.core.utils.preferences.Preferences.saveToken
-import com.submission.storyapplication.core.utils.preferences.Preferences.saveUserId
+import com.submission.storyapplication.core.utils.Preferences
+import com.submission.storyapplication.core.utils.Preferences.preferences
+import com.submission.storyapplication.core.utils.Preferences.saveName
+import com.submission.storyapplication.core.utils.Preferences.saveToken
+import com.submission.storyapplication.core.utils.Preferences.saveUserId
 import com.submission.storyapplication.ui.viewModel.LoginViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn

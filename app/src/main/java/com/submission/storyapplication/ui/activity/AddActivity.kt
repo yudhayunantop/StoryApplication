@@ -21,7 +21,7 @@ import com.submission.storyapplication.core.utils.Resources
 import com.submission.storyapplication.core.utils.createCustomTempFile
 import com.submission.storyapplication.core.utils.rotateBitmap
 import com.submission.storyapplication.core.utils.uriToFile
-import com.submission.storyapplication.core.utils.preferences.Preferences
+import com.submission.storyapplication.core.utils.Preferences
 import com.submission.storyapplication.ui.viewModel.AddStoriesViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn

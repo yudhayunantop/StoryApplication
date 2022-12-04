@@ -1,34 +1,36 @@
-package com.submission.storyapplication.ui.adapter
+package com.submission.storyapplication.core.ui
 
-import android.app.Activity
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.app.ActivityOptionsCompat
-import androidx.core.util.Pair
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.submission.storyapplication.ui.activity.DetailActivity
 import com.submission.storyapplication.core.data.remote.response.AllStoriesModel
 import com.submission.storyapplication.core.databinding.ItemStoryBinding
 
 class StoriesAdapter
     : PagingDataAdapter<AllStoriesModel.stories, StoriesAdapter.ListViewHolder>(DIFF_CALLBACK) {
+    lateinit var onClickListener: OnClickListener
+
+    @JvmName("setOnClickListener1")
+    fun setOnClickListener(onClickListener: OnClickListener){
+        this.onClickListener=onClickListener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val inflater = ItemStoryBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        return ListViewHolder(inflater)
+        return ListViewHolder(inflater, onClickListener)
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it) }
     }
 
-    class ListViewHolder(itemView: ItemStoryBinding) : RecyclerView.ViewHolder(itemView.root) {
+    class ListViewHolder(itemView: ItemStoryBinding, onClickListener: OnClickListener) : RecyclerView.ViewHolder(itemView.root) {
         var binding: ItemStoryBinding = itemView
+        var onClickListener=onClickListener
 
         fun bind(stories: AllStoriesModel.stories) {
             Glide.with(itemView.context)
@@ -39,18 +41,7 @@ class StoriesAdapter
             binding.tvItemDesc.text = stories.description
 
             itemView.setOnClickListener {
-                val intent = Intent(itemView.context, DetailActivity::class.java)
-                intent.putExtra("data", stories)
-
-                val optionsCompat: ActivityOptionsCompat =
-                    ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        itemView.context as Activity,
-                        Pair(binding.ivItemPhoto, "profile"),
-                        Pair(binding.tvItemName, "name"),
-                        Pair(binding.tvItemDesc, "description")
-                    )
-
-                itemView.context.startActivity(intent, optionsCompat.toBundle())
+                onClickListener.onItemClick(stories)
             }
         }
     }
@@ -71,5 +62,9 @@ class StoriesAdapter
                 return oldItem.id == newItem.id
             }
         }
+    }
+
+    interface OnClickListener{
+        fun onItemClick(stories: AllStoriesModel.stories)
     }
 }

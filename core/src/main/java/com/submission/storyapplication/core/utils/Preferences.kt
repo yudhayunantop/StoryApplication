@@ -1,4 +1,4 @@
-package com.submission.storyapplication.core.utils.preferences
+package com.submission.storyapplication.core.utils
 
 import android.content.Context
 import android.content.SharedPreferences
