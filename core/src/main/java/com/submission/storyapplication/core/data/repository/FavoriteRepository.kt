@@ -1,7 +1,6 @@
 package com.submission.storyapplication.core.data.repository
 
 import com.submission.storyapplication.core.data.local.LocalDataSource
-import com.submission.storyapplication.core.data.local.entity.StoriesEntity
 import com.submission.storyapplication.core.domain.model.Stories
 import com.submission.storyapplication.core.domain.repoInterface.IFavoriteRepository
 import com.submission.storyapplication.core.utils.DataMapper

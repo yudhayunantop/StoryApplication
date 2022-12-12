@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">StoryApplication</string>
+    <string name="app_name">Story App</string>
     <string name="title_login">Form Login</string>
     <string name="title_regis">Form Register</string>
     <string name="title">Know our story with \nDicoding Indonesia</string>
