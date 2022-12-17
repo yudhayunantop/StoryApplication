@@ -1,3 +1,0 @@
-Ketika berhasil memuat data stories.
-1. Memastikan data tidak null.
-2. Memastikan jumlah data sesuai dengan yang diharapkan.
