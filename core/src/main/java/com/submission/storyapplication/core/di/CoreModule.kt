@@ -8,6 +8,8 @@ import com.submission.storyapplication.core.data.remote.RemoteDataSource
 import com.submission.storyapplication.core.data.repository.*
 import com.submission.storyapplication.core.domain.repoInterface.*
 import com.submission.storyapplication.core.utils.constant.baseUrl
+import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SupportFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -47,16 +49,30 @@ val repositoryModule = module {
     single{LocalDataSource(get())}
 }
 
+//val databaseModul = module {
+//    single {
+//        Room.databaseBuilder(
+//            androidContext(),
+//            StoriesDatabase::class.java, "stories_database.db"
+//        )
+//            .fallbackToDestructiveMigration()
+//            .build()
+//    }
+//    factory {
+//        get<StoriesDatabase>().storyDao()
+//    }
+//}
+
 val databaseModul = module {
+    factory { get<StoriesDatabase>().storyDao() }
     single {
+        val passphrase: ByteArray = SQLiteDatabase.getBytes("submission".toCharArray())
+        val factory = SupportFactory(passphrase)
         Room.databaseBuilder(
             androidContext(),
             StoriesDatabase::class.java, "stories_database.db"
-        )
-            .fallbackToDestructiveMigration()
+        ).fallbackToDestructiveMigration()
+            .openHelperFactory(factory)
             .build()
-    }
-    factory {
-        get<StoriesDatabase>().storyDao()
     }
 }
