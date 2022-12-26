@@ -10,6 +10,7 @@ import com.submission.storyapplication.core.domain.repoInterface.*
 import com.submission.storyapplication.core.utils.constant.baseUrl
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SupportFactory
+import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -20,12 +21,20 @@ import java.util.concurrent.TimeUnit
 
 val networkModule = module {
     single {
+        val hostname = "story-api.dicoding.dev"
+        val certificatePinner = CertificatePinner.Builder()
+            .add(hostname, "sha256/cMX0U3RLCGDeVwYJ1GaXYfwDbP1ccAzqo9fkZGK5CoQ=")
+            .add(hostname, "sha256/jQJTbIh0grw0/1TkHSumWb+Fs0Ggogr621gT3PvPKG0=")
+            .add(hostname, "sha256/C5+lpZ7tcVwmwQIMcRtPbsQtWLABXhQzejna0wHFr8M=")
+            .build()
+
         OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
 //          Tambah waktu agar tidak timeout
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
+            .certificatePinner(certificatePinner)
             .build()
     }
     single {
