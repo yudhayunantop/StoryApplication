@@ -48,8 +48,6 @@ class FavoriteActivity : AppCompatActivity() {
 //        adapter.setListStories(listStories)
 ////        adapter.notifyDataSetChanged()
 
-        val adapter= FavoriteAdapter()
-        binding.listFavoriteStory.adapter=adapter
         favoriteViewModel.viewModelScope.launch {
             favoriteViewModel.getAllFavorite().collectLatest {
                 adapter.setListStories(listStories)
