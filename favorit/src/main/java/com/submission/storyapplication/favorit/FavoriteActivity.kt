@@ -11,8 +11,10 @@ import com.submission.storyapplication.core.utils.Resources
 import com.submission.storyapplication.favorit.databinding.ActivityFavoriteBinding
 import com.submission.storyapplication.favorit.di.favoriteModule
 import com.submission.storyapplication.core.ui.FavoriteAdapter
+import com.submission.storyapplication.core.ui.StoriesAdapter
 import com.submission.storyapplication.detail.DetailActivity
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -43,8 +45,16 @@ class FavoriteActivity : AppCompatActivity() {
     }
 
     private fun refreshDataAdapter(listStories: List<Stories>) {
-        adapter.setListStories(listStories)
-        adapter.notifyDataSetChanged()
+//        adapter.setListStories(listStories)
+////        adapter.notifyDataSetChanged()
+
+        val adapter= FavoriteAdapter()
+        binding.listFavoriteStory.adapter=adapter
+        favoriteViewModel.viewModelScope.launch {
+            favoriteViewModel.getAllFavorite().collectLatest {
+                adapter.setListStories(listStories)
+            }
+        }
 
         adapter.setOnClickListener(object : FavoriteAdapter.OnClickListener{
             override fun onItemClick(stories: Stories) {
