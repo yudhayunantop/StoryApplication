@@ -35,16 +35,12 @@ class FavoriteActivity : AppCompatActivity() {
         supportActionBar?.title = "List Favorite Story"
 
         binding.listFavoriteStory.layoutManager = LinearLayoutManager(this)
-        initializeAdapter()
         getAllStoriesFavorite()
     }
 
-    private fun initializeAdapter() {
+    private fun refreshDataAdapter(listStories: List<Stories>) {
         adapter = FavoriteAdapter()
         binding.listFavoriteStory.adapter = adapter
-    }
-
-    private fun refreshDataAdapter(listStories: List<Stories>) {
 //        adapter.setListStories(listStories)
 ////        adapter.notifyDataSetChanged()
 
