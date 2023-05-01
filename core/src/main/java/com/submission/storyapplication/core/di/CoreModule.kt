@@ -79,7 +79,7 @@ val databaseModul = module {
         val factory = SupportFactory(passphrase)
         Room.databaseBuilder(
             androidContext(),
-            StoriesDatabase::class.java, "stories_database.db"
+            StoriesDatabase::class.java, "stories_database"
         ).fallbackToDestructiveMigration()
             .openHelperFactory(factory)
             .build()
